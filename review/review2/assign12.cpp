@@ -5,20 +5,35 @@
 
 using namespace std;
 
-int main() 
+int main()
 {
 	string name;
+	int a=0,b=0;
 
 	cout << "Please enter vote sequence" << endl;
 
 	getline(cin, name);
-	cout << "Hello " << name << ".\n";
 
-	transform(name.begin(), name.end(), name.begin(), [](unsigned char c){ return tolower(c); });
+	// boost::algorithm::to_lower(name);
 
-	size_t n = count(name.begin(), name.end(), "a");
+	transform(name.begin(), name.end(), name.begin(), ::tolower);
 
-	cout << n << endl;
+	// size_t n = count(name.begin(), name.end(), "a");
+
+	for (int i = 0; i < name.size(); i++) {
+		if (name[i] == 'a') a++;
+		else if (name[i] == 'b') b++;
+	}
+
+	if (a > b) {
+		cout << "Singer A wins \n";
+	} else if (b > a) {
+		cout << "Singer B wins \n";
+	} else if (a == b) {
+		cout << "It was a tie \n";
+	} else {
+		cout << "Error occurred \n";
+	}
+
 
 }
-
