@@ -35,12 +35,14 @@ int main()
   
 	sequence.pop_back();
 
+
   for (auto x : sequence) {
         //cout << x << endl;
+	  for (int a = 0; a < factor; a++) {
 	  for (int d = 0; d <= x.size(); d++) {
 		//cout << x[d] <<endl;  
 		if (letter != x[d] || letter == '\n') {
-			for (int b = 0; b <= count * factor + 1; b++) {
+			for (int b = 0; b <= count * factor + 2; b++) {
 				cout << letter;
 			}
 			letter = x[d];
@@ -51,5 +53,6 @@ int main()
 		}
 	}
   cout << "" << endl << "";
+  }
   }
 }
