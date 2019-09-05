@@ -34,9 +34,9 @@ int main()
 	for (int b = 0; b < sequence.size(); b += 2) {
 		cout << sequence[b] << endl;
 		biggo += int(sequence[b]) - 48;
-		cout << biggo << endl;
+		cout << biggo << "---" << endl;
 	}
 
-	cout << biggo << endl;
+	cout << "The new number is " << biggo << "!" << endl;
 
 }
