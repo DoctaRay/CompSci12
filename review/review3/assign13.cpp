@@ -8,18 +8,48 @@ int main()
 {
   vector<string> sequence;
   string stuff = " ";
+  char letter;
+  int count;
+  char ch;
+  int factor;
 
   cout << "Enter logo pics. Enter :q when you're done." << endl;
 
+	//cin >> stuff;
+	//sequence.push_back(stuff);
+
+  
   while (stuff != ":q") {
-    cin >> stuff;
-    sequence.push_back(stuff);
+	  /*if (cin.get() == '\n'){
+	  	cin >> stuff;
+		sequence.push_back(stuff);
+	  }*/
+
+	getline(cin, stuff);
+	sequence.push_back(stuff);	
   }
+
+  cout << "Enter scaling factor: ";
+
+  cin >> factor;
+  
+	sequence.pop_back();
+
   for (auto x : sequence) {
-    for (int d = 0; d < x.size(); d++) {
-      cout << x[d];
-    }
-
+        //cout << x << endl;
+	  for (int d = 0; d <= x.size(); d++) {
+		//cout << x[d] <<endl;  
+		if (letter != x[d] || letter == '\n') {
+			for (int b = 0; b <= count * factor + 1; b++) {
+				cout << letter;
+			}
+			letter = x[d];
+			count = 0;
+		}
+		else if (letter == x[d]) {
+			count++;
+		}
+	}
+  cout << "" << endl << "";
   }
-
 }
