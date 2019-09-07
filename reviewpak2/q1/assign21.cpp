@@ -22,7 +22,7 @@ int main() {
 	string rword;
 
 	cout << "What's your special word?" << endl;
-	cin >> word;
+	getline(cin, word);
 
 	rword = reverseStr(word);
 	int spaces = word.length();
@@ -36,8 +36,8 @@ int main() {
 		cout << string(spaces,' ') << word.substr(0, b) << reverseStr(word.substr(0, b- 1)) << string(spaces,' ') << endl;					}
 
 
-	spaces = word.length() % 2 == 0 ? word.length() / 2 + 1: word.length() / 2 + 2;
-	
+	spaces = word.length() - 1;
+
 	for (char& x: word) {
 		cout << string(spaces, ' ') << x << endl;
 	}
