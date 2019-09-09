@@ -5,6 +5,9 @@
 #include <iterator>
 #include <sstream>
 #include <bits/stdc++.h>
+#include <algorithm>
+#include <stdio.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -15,31 +18,66 @@ struct Student
 
 };
 
+vector<int> insertSort(vector<int> a) {
+	int j;
+	for (int i = 0; i < a.size(); i++) {
+		j = i;
+		while (j >= 0 && a[j] < a[j + 1]) {
+			iter_swap(a.begin() + j, a.begin() + j + 1);
+			j--;	
+		}
+	}
+	return a;
+}
+
+
+/* vector<int> histogram;
+for (int i = 0; i < 101; ++i)
+		histogram.push_back(0);
+int m = 0;
+*/
 int mode(vector<int> a) {
-	vector<int> histogram(101,0);
-	for( int i=0; i<100; ++i )
+	vector<int> histogram;
+	for (int i = 0; i < 101; ++i)
+		histogram.push_back(0);
+	int m = 0;
+
+
+	for( int i=0; i<a.size(); ++i )
 		++histogram[a[i]];
-	return (int)(max_element(histogram.begin(), histogram.end()) - histogram.begin());
+	
+	for (int i =0; i < a.size(); ++i) {
+		if (histogram[a[i]] >= m) {
+			m = a[i];			
+			
+		}
+	}
+	for (int i = 0; i < a.size(); ++i) {
+		if (histogram[a[i]] == histogram[m] && a[i] != m)
+			return 999;
+	}	
+	
+	return (int)m;	
 }
 
 int median(vector<int> a) {
-	sort(a.begin(), a.end());
+	insertSort(a);
+
 	if (a.size() % 2 == 0) {
-		return (int)((a[a.size() / 2] + a[a.size() / 2 + 1]) / 2); 
+		return (int)((a[a.size() / 2 - 1] + a[a.size() / 2]) / 2); 
 	}
 	else {
 		return (int)(a[(a.size() - 1) / 2]);
 	}
 }
 
-int mean(vector<int> a) {
-	int total = 0;
-	for (int& x: a) {
+float mean(vector<int> a) {
+	float total = 0;
+	for (int x: a) {
 		total += x;
 	}
-	return (int)(total / a.size());
+	return(total / a.size());
 }
-
 int main() {
 	vector<Student> marks;
 	string name;
@@ -55,6 +93,7 @@ int main() {
 			marks.pop_back();
 			break;
 		}
+				
 		
 		cout << "Enter marks" << endl;
 		for (int a = 0; a >= 0; a++) {
@@ -67,28 +106,37 @@ int main() {
 		}
 	}
 
-	marks[0].grades.pop_back();
-
+/*
 	for (Student x: marks) {
 		cout << x.name << endl;
 		for (int y: x.grades) {
 			cout << y << endl;;
 		}
 	}
-
-	cout << "Hey all" << endl;
+*/
+	cout << "Here are the respective stats. 999 for median means that there is not median." << endl;
 	
 int total = 0;
-	for (int& x: marks[0].grades) {
+	/* for (int x: marks[0].grades) {
 		total += x;
 	}
-	int mean = (int)(total / marks[0].grades.size());
-	cout << "Mode, median and mean of 1st student are " << mean;
-/*
+	int mean = (int)(total / marks[0].grades.size()); 
+	*/
+	for (int i = 0; i < marks.size(); i++) {
+	cout << "Mode, median and mean of student " << i << "(" << marks[i].name <<  ") are " << mode(marks[i].grades) << ", " << median(marks[i].grades) << ", " << setprecision(3) << mean(marks[i].grades) << "." << endl;  
+	
+	/* cout << mode(marks[0].grades) << endl;
+       	cout << median(marks[0].grades) << endl; 
+	cout << mean(marks[0].grades) << endl;
+	cout << "The size of array is " << marks[0].grades.size() << endl;
+	*/
+	}
+	/*
 	while (name!="-1") {
 		cout << "Enter name: " << endl;
 		cin >> name;
 		while (grade!="-1") {
+
 			cout << "Enter grades:  " << endl;
 			cin >> grade;
 			marks.push_back(grade);
