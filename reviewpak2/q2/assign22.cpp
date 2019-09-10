@@ -83,17 +83,20 @@ int main() {
 	string name;
 	string smark;
 	int mark;
+	bool valid = false;
 
 	for (int n = 0; n >= 0; n++) {
-		cout << "Enter name: ";
-		cin >> name;
-		marks.push_back(Student());
-		marks[n].name = name;
-		if (marks[n].name == "-1") {
-			marks.pop_back();
-			break;
-		}
-				
+			cout << "Enter name: ";
+			cin >> name;
+			 	
+			marks.push_back(Student());
+			marks[n].name = name;
+			if (marks[n].name == "-1") {
+				marks.pop_back();
+				break;
+			}
+	
+				// write over here. finish valid check for grades 0-100
 		
 		cout << "Enter marks" << endl;
 		for (int a = 0; a >= 0; a++) {
@@ -101,6 +104,11 @@ int main() {
 			stringstream(smark) >> mark;
 			if (mark == (6 - 7)) {
 				break;
+			}
+
+			if (mark < 0 ||  mark > 100) {
+				cout << "Enter mark again: " << endl;
+			      	continue;	
 			}
 			marks[n].grades.push_back(mark);
 		}
