@@ -18,29 +18,23 @@ struct Student
 
 };
 
-vector<int> insertSort(const vector<int> &a) {
-	//cout << "var does not init" << endl;
-	unsigned int i, j;
-	int max;
-	vector<int> sortedArray = {a.size()};
-	sortedArray = a;
-
-	//cout << "for loop does not init" << endl;
+vector<int> insertSort(vector<int> a) {
+	cout << "var does not init" << endl;
+	int j;
+	cout << "for loop does not init" << endl;
 	for (int i = 0; i < a.size(); i++) {
-		for (j = i; j < a.size(); j++) {
-			if(sortedArray[i] < sortedArray[j]){
-				int tmp; 
-				tmp = sortedArray[i];
-				sortedArray[i] = sortedArray[j];
-				sortedArray[j] = tmp;
-			}
-		}		
+		cout << j << "j does not = i" << endl;
+		j = i;
+		cout << "while loop does not init" << endl;
+		while (j > 0 && a[j] < a[j + 1]) {
+			cout << a[j] << " iter swap does not init" << endl;
+			iter_swap(a.begin() + j, a.begin() + j + 1);
+			cout << j << " J does not - " << endl;
+			j--;	
+		}
 	}
-
-	
-	//cout << "does not return" << endl;
-	reverse(begin(sortedArray), end(sortedArray));
-	return sortedArray;
+	cout << "does not return" << endl;
+	return a;
 }
 
 
@@ -49,7 +43,7 @@ for (int i = 0; i < 101; ++i)
 		histogram.push_back(0);
 int m = 0;
 */
-vector<int> mode(vector<int> a) {
+int mode(vector<int> a) {
 	vector<int> histogram;
 	vector<int> modes;
 	vector<int> fail = { 999 }; 
@@ -72,7 +66,7 @@ vector<int> mode(vector<int> a) {
 			
 		}
 	}
-	//cout << highest << endl;
+	cout << highest << endl;
 
 	vector<int> tempo = histogram;
 	tempo.erase(remove(tempo.begin(), tempo.end(), 0), tempo.end());
@@ -83,18 +77,18 @@ vector<int> mode(vector<int> a) {
 	}*/
 	for (int x: tempo) {
 		 if (x == highest) {
-			//cout << x << endl;
+			cout << x << endl;
 			check = true;	
 		}
 		else {
-			//cout << x << endl;
+			cout << x << endl;
 			check == false;
 			break;
 		}
 	}
 
 	if (check) {
-		return fail;
+		return 999;
 	}
 
 	for (int i = 0; i < a.size(); ++i) {
@@ -102,9 +96,9 @@ vector<int> mode(vector<int> a) {
 			count++;
 		}
 		else if (histogram[a[i]] != 1) {
-			//cout << "gets value " << histogram[a[i]] << " " << a[i] <<  endl;
+			cout << "gets value " << histogram[a[i]] << " " << a[i] <<  endl;
 			if (histogram[a[i]] == highest && !(find(begin(modes), end(modes), a[i])!=end(modes))) {
-			//	cout << "test runs" << endl;
+				cout << "test runs" << endl;
 				modes.push_back(a[i]);
 			} 
 			
@@ -115,42 +109,38 @@ vector<int> mode(vector<int> a) {
 		return fail;
 		cout << " no mode " << endl;
 	} */	
-	/*cout << "Modes: ";
+	cout << "Modes: ";
 	for (int x: modes) {
 		cout << x << " ";
 	}
-	cout << endl;*/
+	cout << endl;
 
-	return modes;	
+	return 1;	
 }
 
 int median(vector<int> a) {
-	//cout << "insert sort " << endl;
-	/*for (int i = 0; i < a.size(); i++) {
-			cout << a[i] << "-";
-		}
-		cout << endl;*/
+	cout << "insert sort " << endl;
 	a = insertSort(a);
-	/*for (int i = 0; i < a.size(); i++) {
+	for (int i = 0; i < a.size(); i++) {
 			cout << a[i] << "-";
 		}
-		cout << endl;*/
+		cout << endl;
 	//a.erase(a.begin());
-	//cout << "modulo does not work " << endl;
+	cout << "modulo does not work " << endl;
 
 	if (a.size() % 2 == 0) {
-		//cout << "median one not works" << endl;
-		//a.erase(a.begin());
+		cout << "median one not works" << endl;
+		// a.erase(a.begin());
 
-		/*for (int i = 0; i < a.size(); i++) {
+		for (int i = 0; i < a.size(); i++) {
 			cout << a[i] << "-";
 		}
-		cout << endl;*/
+		cout << endl;
 	
 		return (int)((a[(a.size() / 2) - 1] + a[a.size() / 2]) / 2); 
 	}
 	else {
-		//cout << "median two not works" << endl;
+		cout << "median two not works" << endl;
 		return (int)(a[(a.size() - 1) / 2]);
 	}
 }
@@ -206,7 +196,7 @@ int main() {
 		}
 	}
 */
-	cout << "Here are the respective stats. 999 for mode means that there is no mode." << endl;
+	cout << "Here are the respective stats. 999 for median means that there is not median." << endl;
 	
 int total = 0;
 	/* for (int x: marks[0].grades) {
@@ -215,13 +205,7 @@ int total = 0;
 	int mean = (int)(total / marks[0].grades.size()); 
 	*/
 	for (int i = 0; i < marks.size(); i++) {
-	cout << "Mode, median and mean of student " << i << "(" << marks[i].name <<  ") are ";
-		vector<int> modeR = mode(marks[i].grades);
-		cout << "<";
-       		for (int j = 0; j < modeR.size(); j++) {
-	       		cout << modeR[j] << ", ";
-		}
-		cout << " >, ";	
+	cout << "Mode, median and mean of student " << i << "(" << marks[i].name <<  ") are " << mode(marks[i].grades) << ", "; 
 		cout << median(marks[i].grades) << ", "; 
 		cout << setprecision(3) << mean(marks[i].grades) << "." << endl;  
 	
