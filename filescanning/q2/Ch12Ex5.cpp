@@ -30,9 +30,11 @@ vector<int> insertSort(vector<int> a) {
 
 int main() {
 	ifstream first;
+	ifstream first2;
 	ifstream second;
+	ifstream second2;
 	ofstream third;
-	int num;
+	int n1, n2, test1, test2;
 	vector<int> numbers;
 
 	first.open("file1.txt");
@@ -43,13 +45,60 @@ int main() {
 		cout << "Error";
 		exit(1);
 	}
-	
-	cout << "File 1: ";
-	while(first >> num) {
-		numbers.push_back(num);
-		cout << num << " ";	
+	while (first >> test1) {
+		cout << test1 << " ";
 	}
-	cout << endl << "File 2: ";
+	cout << endl;
+
+	while (second >> test2){
+		cout << test2 << " ";
+	}
+	cout << endl;
+	first.close();
+	second.close();
+	//first >> n1;
+	//cout << n1 << endl;
+	
+	first2.open("file1.txt");
+	second2.open("file2.txt");
+	
+	first2 >> n1;
+	second2 >> n2;
+
+	while(!second2.eof() && !first2.eof()) {
+		
+			if (n1 > n2) {
+				numbers.push_back(n2);
+				cout << n2 << endl;
+				second2 >> n2;
+				continue;	
+			} else if (n1 <= n2) {
+				numbers.push_back(n1);
+				cout << n1 << endl;
+				first2 >> n1;
+				continue;
+			} 
+			
+			if (first2.eof()){
+				n1 = 2147483647;
+			}
+			if(second2.eof()) {
+				n2 = 2147483647;
+			}
+
+			if (n1 == 2147483647 && n2 == 2147483647) {
+				break;
+			}
+			/*else {
+				first2 >> n1;
+				second2 >> n2;
+				continue;
+			}*/
+		//numbers.push_back(num);
+		//cout << num << " ";	
+	}
+	
+	/*cout << endl << "File 2: ";
 
 	while (second >> num) {
 		numbers.push_back(num);
@@ -57,7 +106,7 @@ int main() {
 	}
 	cout << endl;
 
-	numbers = insertSort(numbers);
+	numbers = insertSort(numbers);*/
 
 	cout << "Final numbers are: ";
 	for (int x: numbers){
