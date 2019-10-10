@@ -34,5 +34,5 @@ int main() {
 	}	
 	
 	cout << "***Menu*** \n 1. Open file \n 2. Save file \n 3. Add a record \n 4. Delete a record \n 5. Modify a record \n 6. Display all \n 7. Quit" << endl;
-	
+	return 0;	
 }
