@@ -7,11 +7,11 @@
 using namespace std;
 
 struct Employee {
-	int number;
+	string number;
 	string name;
 	string married;
-	int age;
-	int salary;
+	string age;
+	string salary;
 };
 
 int main() {
@@ -20,60 +20,38 @@ int main() {
 	ifstream file;
     istringstream ss;
 	string line;
+    vector<vector<string> > inputs;
     int choice;
     int value;
     string delimiter = ",";
-    size_t count = 0;
+    int count = 0;
 
 	file.open("data.txt");
 
 	getline(file, waste);
 
 	while(getline(file, line)){
-		Employee test;
+        vector<string> temp;
+        for (int i = 0; i < 5; i++) {
+            count = line.find(delimiter);
+            string token = line.substr(0, count);
+            temp.push_back(token);
+            cout << count << endl;
+            line.erase(0, count + 1);
+        }
+        inputs.push_back(temp);
+	}
 
-        count = line.find(delimiter);
-        string token = line.substr(0, count);
-
-        ss >> value;
-        test.number = value;
-
-        line.erase(0, count);
-
-        token = line.substr(0, count);
-
-        test.married = token;
-
-        line.erase(0, count);
-
-        token = line.substr(0, count);
-
-        ss >> value;
-        test.age = value;
-
-        line.erase(0, count);
-
-        token = line.substr(0, count);
-
-        ss >> value;
-        test.salary = value;
-
-        line.erase(0, count);
-
-        token = line.substr(0, count);
-
-        test.name = token;
-
-        line.erase(0, count);
-
-        token = line.substr(0, count);
-
-        test.name = token;
-
-        line.erase(0, count);
+    for (int i = 0; i < inputs.size(); i++) {
+        Employee test;
+        test.number = inputs[i][0];
+        test.name = inputs[i][1];
+        test.married = inputs[i][2];
+        test.age = inputs[i][3];
+        test.salary = inputs[i][4];
 
         list.push_back(test);
-	}
+    }
 
 	cout << "***Menu*** \n 1. Open file \n 2. Save file \n 3. Add a record \n 4. Delete a record \n 5. Modify a record \n 6. Display all \n 7. Quit" << endl;
 
