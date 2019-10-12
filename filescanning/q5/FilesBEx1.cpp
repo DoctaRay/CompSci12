@@ -14,6 +14,10 @@ struct Employee {
 	string salary;
 };
 
+bool check(Employee i, Employee j) {
+    return (i.name == j.name);
+}
+
 void fchoice(int choice, vector<Employee> list, vector<Employee> temp = {}) {
     if (choice == 0) {
         cout << "***Menu*** \n 1. Open file \n 2. Save file \n 3. Add a record \n 4. Delete a record \n 5. Modify a record \n 6. Display all \n 7. Quit" << endl;
@@ -36,11 +40,8 @@ void fchoice(int choice, vector<Employee> list, vector<Employee> temp = {}) {
         vector<vector<string> > inputs;
         outfile.open("data.txt", std::ofstream::out | std::ofstream::trunc);
 
-        list = temp;
-
         outfile << "Employee#,Name,Marital Status,Age,Salary\n";
-        outfile << "0128,B.Smith,M,19,11000\n";
-        for (auto x: list) {
+        for (auto x: temp) {
             outfile << x.number << "," << x.name << "," << x.married << "," << x.age << "," << x.salary << endl;
         }
 
@@ -97,7 +98,7 @@ void fchoice(int choice, vector<Employee> list, vector<Employee> temp = {}) {
         cout << endl;
         temp.push_back(tempEmp);
         cout << "Employee added " << endl;
-        if (temp != list) {
+        if (!equal(temp.begin(), temp.end(), list.begin(), check)) {
             cout << "(MUST SAVE)";
         }
         cout << "\n***Menu*** \n 1. Open file \n 2. Save file \n 3. Add a record \n 4. Delete a record \n 5. Modify a record \n 6. Display all \n 7. Quit" << endl;
@@ -107,20 +108,29 @@ void fchoice(int choice, vector<Employee> list, vector<Employee> temp = {}) {
     }
     else if (choice == 4) {
         string num;
-        temp = list;
-        for (auto x: list) {
+        vector<Employee> work;
+
+        if (temp.empty()) {
+            work = list;
+        } else work = temp;
+
+        for (auto x: work) {
             cout << x.number << " " << x.name << " " << x.married << " " << x.age << " " << x.salary << endl;
         }
 
         cout << "\nWhich employee would you like to remove? Enter employee number (q to exit):";
         cin >> num;
-        for (int i = 0; i < temp.size(); i++) {
-            if (temp[i].number == num) {
-                temp.erase(temp.begin() + i - 1);
+        for (int i = 0; i < work.size(); i++) {
+            if (work[i].number == num) {
+                cout << "Deleted " << work[i].name << endl;
+                work.erase(work.begin() + i);
+                break;
             }
         }
 
-        if (temp != list) {
+        temp = work;
+
+        if (!equal(temp.begin(), temp.end(), list.begin(), check)) {
             cout << "(MUST SAVE)";
         }
         cout << "\n***Menu*** \n 1. Open file \n 2. Save file \n 3. Add a record \n 4. Delete a record \n 5. Modify a record \n 6. Display all \n 7. Quit" << endl;
@@ -156,7 +166,7 @@ void fchoice(int choice, vector<Employee> list, vector<Employee> temp = {}) {
                 cin >> tempEmp.salary;
                 cout << endl;
                 temp[i] = tempEmp;
-                if (temp != list) {
+                if (!equal(temp.begin(), temp.end(), list.begin(), check)) {
                     cout << "(MUST SAVE)";
                 }
                 cout << "\n***Menu*** \n 1. Open file \n 2. Save file \n 3. Add a record \n 4. Delete a record \n 5. Modify a record \n 6. Display all \n 7. Quit" << endl;
@@ -166,15 +176,19 @@ void fchoice(int choice, vector<Employee> list, vector<Employee> temp = {}) {
         }
     }
     else if (choice == 6) {
-        for (auto x: list) {
+        vector<Employee> work;
+        if (temp.empty()) {
+            work = list;
+        } else work = temp;
+        for (auto x: work) {
             cout << x.number << " " << x.name << " " << x.married << " " << x.age << " " << x.salary << endl;
         }
-        if (temp != list) {
+        if (!equal(temp.begin(), temp.end(), list.begin(), check)) {
             cout << "(MUST SAVE)";
         }
         cout << "\n***Menu*** \n 1. Open file \n 2. Save file \n 3. Add a record \n 4. Delete a record \n 5. Modify a record \n 6. Display all \n 7. Quit" << endl;
         cin >> choice;
-        fchoice(choice, list, temp);
+        fchoice(choice, list, work);
     }
     else {
 
