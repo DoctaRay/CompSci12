@@ -3,26 +3,24 @@
 
 using namespace std;
 
-void gcf(int x, int y, int count = 1, int factor int max = 0) {
-    if (x % count == 0 && y % count == 0) {
-        count++;____
-        gcf(x, y, count, max);
-    } else if (count == max) {
-        cout << "\nGCF is " << count;
+int gcf(int x, int y) {
+    if (y == 0) {
+        return x;
     }
+    return gcf(y, x % y);
 }
 
 int main() {
     int x;
     int y;
     int max;
-    cout << "Enter first number: ";
+    cout << "Enter first number (highest number): ";
     cin >> x;
-    cout << "\nEnter second number: ";
+    cout << "\nEnter second number (lowest number): ";
     cin >> y;
 
     if (x > y) max = x;
     else max = y;
 
-    gcf(x, y, 1, max);
+    cout << "GCF is " << gcf(x, y);
 }
