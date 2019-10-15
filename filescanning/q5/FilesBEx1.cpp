@@ -15,7 +15,7 @@ struct Employee {
 };
 
 bool check(Employee i, Employee j) {
-    return (i.name == j.name);
+    return (i.number == j.number);
 }
 
 void fchoice(int choice, vector<Employee> list, vector<Employee> temp = {}) {
