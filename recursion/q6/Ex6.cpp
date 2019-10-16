@@ -6,6 +6,7 @@ using namespace std;
 
 void palindrome(string str, int strcount, int count = 1, string check1="") {
 
+    //don't use for loops
     //checking for palindrome
     for (int i = 0; i < count; i++) {
         //reversing string
