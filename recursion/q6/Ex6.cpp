@@ -4,28 +4,22 @@
 
 using namespace std;
 
-void palindrome(string str, int strcount, int count = 1, string check1="") {
+void palindrome(string str, int strcount, int count = 1, string check1="", int forcount = 0) {
 
     //don't use for loops
     //checking for palindrome
-    for (int i = 0; i < count; i++) {
+    //for (int i = 0; i < count; i++) {
         //reversing string
-        check1=str.substr(i, strcount);
-        string check2(str.rbegin(), str.rend());
-        check2=check2.substr(i, strcount);
+        check1=str.substr(forcount, strcount);
+        string check2(check1.rbegin(), check1.rend());
+        //check2=check2.substr(forcount, strcount);
+        string temp = check1;
+        //cout << check2 << endl;
 
         //REMOVE SPACE
-        int tempcount = 0;
-        for (int t = 0; check1[t]; t++)
-            if (check1[t] != ' ')
-                check1[tempcount++] = check1[t];
-        check1[tempcount] = '\0';
+        check1.erase(remove(check1.begin(), check1.end(), ' '), check1.end());
 
-        tempcount = 0;
-        for (int t = 0; check2[t]; t++)
-            if (check2[t] != ' ')
-                check2[tempcount++] = check2[t];
-        check2[tempcount] = '\0';
+        check2.erase(remove(check2.begin(), check2.end(), ' '), check2.end());
 
         // lowering letters
         transform(check1.begin(), check1.end(), check1.begin(),
@@ -36,32 +30,40 @@ void palindrome(string str, int strcount, int count = 1, string check1="") {
 
         if (check1.compare(check2) == 0) {
             cout << check1 << "|" << check2 << endl;
+            //cout << check1[0] << " / " << check2[0];
             cout << "Sentence is palindrome." << endl;
+            cout << "It was <" << temp << ">";
             return;
         }
         else {
-            cout << check1 << "|" << check2 << endl;
-            cout <<"Sentence IS NOT palindrome" << endl;;
+            cout << check1 << "|" << "<" << check2 << ">" << endl;
+            //cout << check1[0] << " / " << check2[0];
+            cout <<"Sentence IS NOT palindrome" << endl;
+            forcount++;
         }
+    //}
+    if (forcount == count) {
+        strcount--;
+        count++;
+        forcount = 0;
+        cout << "----------------------------" << endl;
     }
-    strcount--;
-    count++;
 
     //cout << "-----------------" << endl;
    // cout << check1 << endl;
     //cout << check2 << endl;
 
-    palindrome(str, strcount, count, check1);
+    palindrome(str, strcount, count, check1, forcount);
 }
 
 int main() {
     string str;
-    //cout << "Enter string to check for palindromes: ";
-    //cin >> str;
+    cout << "Enter string to check for palindromes: ";
+    getline(cin, str);
 
-    str="I prefer pie.";
+    //str="Racecar likes race car";
 
-    int temp = str.length() - 1;
+    int temp = str.length();
     palindrome(str, temp);
 
 }
