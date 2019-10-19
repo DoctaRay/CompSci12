@@ -25,9 +25,9 @@ int main() {
 	vector<string> tester;
 	//regex pat("([A-Z])|([a-z])\w+");
 	//smatch m;
-	if (!inFile) {0
+	if (!inFile) {
 		cout << "Error";
-	        exit(1);	
+	        exit(1);
 	}
 	/*if (inFile.is_open()) {
 		while(getline(inFile, str)){
@@ -68,18 +68,18 @@ int main() {
 				words[i].times += 1;
 				break;
 			}
-			
-			
-			
+
+
+
 		}
-		
+
 
 	}
 
 	cout << endl;
 
 	for (auto x: words) {
-		values.push_back(x.theone);	
+		values.push_back(x.theone);
 	}
 
 	sort(words.begin(), words.end(), [](Word a, Word b) {
@@ -89,11 +89,11 @@ int main() {
 
 
 
-	
+
 	cout << endl;
 
-	
-	
+
+
 	/*for (int i = 0; i < tester.size(); i++){
 		for (int j = 0; j < words.size(); j++) {
 			if (words[j].theone != tester[i]){
