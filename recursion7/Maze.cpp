@@ -3,65 +3,130 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
+#include <map>
 
 using namespace std;
 
-bool check(vector<vector<char> > mazesol, vector<int> current, char look) {
-    if (mazesol[current[0] + 1][current[1]] == look) {
-        //recurse
-    }
-    //south
-    if (mazesol[current[0]][current[1] + 1] == look) {
-
-    }
-    //north
-    if (mazesol[current[0] - 1][current[1]] == look) {
-
-    }
-    //west
-    if (mazesol[current[0]][current[1] - 1] == look) {
-
+void print(vector<vector<char> > maze) {
+    for (int x = 0; x < maze.size(); x++) {
+        for (int y = 0; y < maze[x].size(); y++) {
+            cout << maze[x][y];
+        }
+        cout << endl;
     }
 }
 
-void findpath(vector<vector<char> > mazesol, vector<int> enter, vector<int> exit, vector<int> current) {
-    /*
-    Finding walls
-    */
-    //east
-    if (mazesol[current[0] + 1][current[1]] == '%') {
-        //recurse
+// bool check(vector<vector<char> > mazesol, vector<int> current, char look) {
+//     int possPaths = 0;
+
+//     if (mazesol[current[0] + 1][current[1]] == look) {
+//         possPaths++;
+//         //recurse
+//     }
+//     //south
+//     if (mazesol[current[0]][current[1] + 1] == look) {
+//         possPaths++;
+//     }
+//     //north
+//     if (mazesol[current[0] - 1][current[1]] == look) {
+//         possPaths++;
+//     }
+//     //west
+//     if (mazesol[current[0]][current[1] - 1] == look) {
+//         possPaths++;
+//     }
+// }
+
+void findpath(vector<vector<char> > mazesol, vector<int> current, vector<int> exit, map<char, bool> triedPaths) {
+  int possPathsNum = 0;
+  map<char, bool> possPaths = {
+      {'N', false},
+      {'E', false},
+      {'W', false},
+      {'S', false}
+  };
+
+    // east
+    if (mazesol[current[0]][current[1]+1] == '.') {
+        possPathsNum++;
+        possPaths['E'] = true;
     }
     //south
-    if (mazesol[current[0]][current[1] + 1] == '%') {
-
+    if (mazesol[current[0]-1][current[1]] == '.') {
+      possPathsNum++;
+      possPaths['S'] = true;
     }
     //north
-    if (mazesol[current[0] - 1][current[1]] == '%') {
-
+    if (mazesol[current[0] - 1][current[1]] == '.') {
+      possPathsNum++;
+      possPaths['N'] = true;
     }
     //west
-    if (mazesol[current[0]][current[1] - 1] == '%') {
-
+    if (mazesol[current[0]][current[1] - 1] == '.') {
+      possPathsNum++;
+      possPaths['W'] = true;
     }
 
-    /*
-    Finding possible spots
-    */
-    if (mazesol[current[0] + 1][current[1]] == '%') {
-        //recurse
+    if (possPathsNum > 1) {
+      if (possPaths['N'] == true && triedPaths['N'] == false) {
+        current[0]--;
+        mazesol[current[0]][current[1]] = '+';
+        triedPaths['N'] = true;
+        findpath(mazesol, current, exit, triedPaths);
+      }
+      else if (possPaths['E'] == true && triedPaths['E'] == false) {
+        current[1]++;
+        mazesol[current[0]][current[1]] = '+';
+        triedPaths['N'] = true;
+        findpath(mazesol, current, exit, triedPaths);
+      }
+      else if (possPaths['W'] == true && triedPaths['W'] == false) {
+        current[1]--;
+        mazesol[current[0]][current[1]] = '+';
+        findpath(mazesol, current, exit, triedPaths);
     }
-    //south
-    if (mazesol[current[0]][current[1] + 1] == '%') {
-
+      else if (possPaths['S'] == true && triedPaths['S'] == false) {
+        current[0]++;
+        mazesol[current[0]][current[1]] = '+';
+        findpath(mazesol, current, exit, triedPaths);
+      }
     }
-    //north
-    if (mazesol[current[0] - 1][current[1]] == '%') {
 
+    if (possPaths['N'] == true) {
+        current[0]--;
+        if (mazesol[current[0]][current[1]] == 'e') {
+            print(mazesol);
+            return;
+        }
+        mazesol[current[0]][current[1]] = '+';
+        findpath(mazesol, current, exit, triedPaths);
     }
-    //west
-    if (mazesol[current[0]][current[1] - 1] == '%') {
-
+    else if (possPaths['E'] == true) {
+        current[1]++;
+        if (mazesol[current[0]][current[1]] == 'e') {
+            print(mazesol);
+            return;
+        }
+        mazesol[current[0]][current[1]] = '+';
+        findpath(mazesol, current, exit, triedPaths);
+    }
+    else if (possPaths['W'] == true) {
+        current[1]--;
+        if (mazesol[current[0]][current[1]] == 'e') {
+            print(mazesol);
+            return;
+        }
+        mazesol[current[0]][current[1]] = '+';
+        findpath(mazesol, current, exit, triedPaths);
+    }
+    else if (possPaths['S'] == true) {
+        current[0]++;
+        if (mazesol[current[0]][current[1]] == 'e') {
+            print(mazesol);
+            return;
+        }
+        mazesol[current[0]][current[1]] = '+';
+        findpath(mazesol, current, exit, triedPaths);
     }
 }
 
@@ -90,7 +155,8 @@ int main() {
             if (maze[x][y] == 'e') {
                 enter[0] = x;
                 enter[1] = y;
-            } if (maze[x][y] == 'x') {
+            }
+            if (maze[x][y] == 'x') {
                 exit[0] = x;
                 exit[1] = y;
             }
@@ -102,5 +168,11 @@ int main() {
     cout << endl;
     for (auto x: exit) cout << x;
 
-    //call function with current as enter coords
+    findpath(maze, enter, exit, {
+      {'N', false},
+      {'E', false},
+      {'W', false},
+      {'S', false}
+  });
+    //call function with current as enter coords. tried paths are all false
 }
