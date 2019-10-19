@@ -1,21 +1,30 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <stdlib.h>
 
 using namespace std;
 
 bool guess(int i, int count) {
-    int guess;
-    cout << "Guess the number";
-    cin >> guess;
-    if (guess != i) {
-
+    int attempt;
+    cout << "Guess the number: ";
+    cin >> attempt;
+    if (attempt!= i) {
+            if (guess(i, ++count)) {
+                cout << "You've solved the puzzle! The number was: " << i << endl;
+                return false;
+            };
+    } else if (attempt == i){
+        cout << "You've solved the puzzle! The number was: " << i << endl;
+        return false;
     }
 }
 
 int main() {
-   int i = (rand()%20) + 1;
-   if (guess(i, 1)) {
-       cout << "You've solved the puzzle!";
+   srand (time(NULL));
+   int i = (rand()%20) + 2;
+   int count = 0;
+   if (guess(i, ++count)) {
+
    };
 }
