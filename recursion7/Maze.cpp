@@ -6,6 +6,24 @@
 
 using namespace std;
 
+bool check(vector<vector<char> > mazesol, vector<int> current, char look) {
+    if (mazesol[current[0] + 1][current[1]] == look) {
+        //recurse
+    }
+    //south
+    if (mazesol[current[0]][current[1] + 1] == look) {
+
+    }
+    //north
+    if (mazesol[current[0] - 1][current[1]] == look) {
+
+    }
+    //west
+    if (mazesol[current[0]][current[1] - 1] == look) {
+
+    }
+}
+
 void findpath(vector<vector<char> > mazesol, vector<int> enter, vector<int> exit, vector<int> current) {
     /*
     Finding walls
