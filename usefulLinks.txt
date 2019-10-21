@@ -1,0 +1,3 @@
+https://www.bogotobogo.com/cplusplus/debugging_core_memory_dump_segmentation_fault_gdb.php
+
+'gdb executable corefile
