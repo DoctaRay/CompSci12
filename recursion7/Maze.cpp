@@ -42,7 +42,6 @@ vector<vector<char> > maze;
 bool findpath(int x, int y) {
     if (x < 0 || y < 0) return false;
     if (maze[x][y] == 'x') {
-        print(maze);
         return true;
     }
     if (maze[x][y] == '%') return false;
@@ -59,9 +58,11 @@ bool findpath(int x, int y) {
     if (findpath(x+1, y)==true) return true;
 
     //west
-    if(findpath(x-1, y)) return true;
+    if(findpath(x-1, y) == true) return true;
 
     maze[x][y] = '.';
+    findpath(x, y);
+
     return false;
 //   int possPathsNum = 0;
 //   map<char, bool> possPaths = {
@@ -173,6 +174,7 @@ int main() {
     ofstream outfile;
     string str;
     vector<int> enter (2), exit (2);
+    int sx,sy;
     string waste;
 
     infile.open("data1.txt");
@@ -191,7 +193,9 @@ int main() {
         for (int y = 0; y < maze[x].size(); y++) {
             if (maze[x][y] == 'e') {
                 enter[0] = x;
+                sx = x;
                 enter[1] = y;
+                sy = y;
             }
             if (maze[x][y] == 'x') {
                 exit[0] = x;
@@ -213,6 +217,8 @@ int main() {
       {'S', false}
     };
 
-    findpath(enter[0], enter[1]);
+    if(findpath(sx, sy)) {
+        print(maze);
+    };
     //call function with current as enter coords. tried paths are all false
 }
