@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <fstream>
 #include <map>
+#include <unistd.h>
 
 using namespace std;
 
@@ -17,6 +18,9 @@ void print(vector<vector<char> > maze) {
 }
 
 vector<vector<char> > maze;
+int xlen, ylen;
+void print(vector<vector<char> > maze);
+bool findpath(int x, int y);
 
 // bool check(vector<vector<char> > mazesol, vector<int> current, char look) {
 //     int possPaths = 0;
@@ -40,13 +44,16 @@ vector<vector<char> > maze;
 // }
 
 bool findpath(int x, int y) {
-    if (x < 0 || y < 0) return false;
-    if (maze[x][y] == 'x') {
+    //usleep(50000);
+    //print(maze);
+    if (x < 0 || y < 0 || x>xlen-1||y>ylen-1) return false;
+    if (maze[y][x] == 'x') {
         return true;
     }
-    if (maze[x][y] == '%') return false;
+    if (maze[y][x] != '.'&&maze[y][x] != 'e') return false;
 
-    maze[x][y] = '+';
+
+    maze[y][x] = '+';
 
     //north
     if (findpath(x, y-1) == true) return true;
@@ -60,10 +67,10 @@ bool findpath(int x, int y) {
     //west
     if(findpath(x-1, y) == true) return true;
 
-    maze[x][y] = '.';
-    findpath(x, y);
+    maze[y][x] = '.';
 
     return false;
+}
 //   int possPathsNum = 0;
 //   map<char, bool> possPaths = {
 //       {'N', false},
@@ -167,7 +174,7 @@ bool findpath(int x, int y) {
 //         mazesol[current[0]][current[1]] = '+';
 //         findpath(mazesol, current, exit, triedPaths);
 //     }
-}
+
 
 int main() {
     ifstream infile;
@@ -177,7 +184,7 @@ int main() {
     int sx,sy;
     string waste;
 
-    infile.open("data1.txt");
+    infile.open("data4.txt");
 
     getline(infile, waste);
 
@@ -190,35 +197,50 @@ int main() {
     }
 
     for (int x = 0; x < maze.size(); x++) {
+        ylen++;
         for (int y = 0; y < maze[x].size(); y++) {
             if (maze[x][y] == 'e') {
-                enter[0] = x;
+                // enter[0] = x;
                 sx = x;
-                enter[1] = y;
+                // enter[1] = y;
                 sy = y;
             }
             if (maze[x][y] == 'x') {
-                exit[0] = x;
-                exit[1] = y;
+                // exit[0] = x;
+                // exit[1] = y;
             }
             cout << maze[x][y];
         }
         cout << endl;
     }
-    for (auto x: enter) cout << x;
-    cout << endl;
-    for (auto x: exit) cout << x;
-    cout << endl;
+    // for (auto x: enter) cout << x;
+    // cout << endl;
+    // for (auto x: exit) cout << x;
+    // cout << endl;
 
-    map<char, bool> temp = {
-      {'N', false},
-      {'E', false},
-      {'W', false},
-      {'S', false}
-    };
+    // map<char, bool> temp = {
+    //   {'N', false},
+    //   {'E', false},
+    //   {'W', false},
+    //   {'S', false}
+    // };
 
-    if(findpath(sx, sy)) {
-        print(maze);
-    };
+    // if(findpath(sx, sy)) {
+    //     cout << "Found a path" << endl;
+    //     print(maze);
+    // } else {
+    //     cout << "noot";
+    // }
+    cout << sx << " " << sy << endl;
+    xlen = maze[0].size();
+    cout << xlen << "<>" << ylen << endl;
+    if(findpath(sy ,sx) == true) {
+        maze[sx][sy] = 'e';
+        cout << "Hurrah, the puzzle is solved" << endl;
+    } else {
+        cout << "Dang, can't be solved." << endl;
+    }
+    print(maze);
+    return 0;
     //call function with current as enter coords. tried paths are all false
 }
