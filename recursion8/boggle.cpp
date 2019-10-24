@@ -7,14 +7,17 @@
 
 using namespace std;
 
-char board[5][5] =
-{
-    {'G', 'S', 'T', 'G', 'T'},
-    {'A', 'A', 'R', 'L', 'S'},
-    {'A', 'D', 'L', 'E', 'S' },
-    {'U', 'O', 'C', 'S', 'E'},
-    {'P', 'O', 'D', 'A', 'I'}
-};
+char board[5][5];
+// {
+//     {'G', 'S', 'T', 'G', 'T'},
+//     {'A', 'A', 'R', 'L', 'S'},
+//     {'A', 'D', 'L', 'E', 'S' },
+//     {'U', 'O', 'C', 'S', 'E'},
+//     {'P', 'O', 'D', 'A', 'I'}
+// };
+
+char board2[5][5];
+
 
 void print(char board[5][5]) {
     for (int i=0; i<5; i++) {
@@ -43,10 +46,12 @@ string strlower(string& str) {
 
 bool check(string word, int x, int y, int index=0, string cur = "") {
     usleep(50000);
-    cout << endl;
+
     //char board2[5][5];
-    //board2 = board;
-    print(board);
+    //copy(begin(board), end(board), begin(board2));
+
+    cout << endl;
+    print(board2);
 
     if (x < 0 || y < 0 || x>4||y>4) {
         //cout << "Cur is " << cur << endl;
@@ -62,13 +67,13 @@ bool check(string word, int x, int y, int index=0, string cur = "") {
         return true;
     }
 
-    if (board[x][y] != word[index]) {
+    if (board2[x][y] != word[index]) {
         //cout << "t2" << endl;
         return false;
     }
 
     index++;
-    cur.push_back(board[x][y]);
+    cur.push_back(board2[x][y]);
     //cout << cur;
     //board[x][y] = 'x';
 
@@ -152,15 +157,17 @@ int main() {
     char c;
     int r;
 
-    // srand (time(NULL));    // initialize the random number generator
-    // for (int i=0; i<6; i++) {
-    //     for (int j = 0; j < 6; j++) {
-    //         r = rand() % 26;   // generate a random number
-    //         c = 'a' + r;            // Convert to a character from a-z
-    //         board[i][j] = c;
-    //     }
-    // }
+    srand (time(NULL));    // initialize the random number generator
+    for (int i=0; i<6; i++) {
+        for (int j = 0; j < 6; j++) {
+            r = rand() % 26;   // generate a random number
+            c = 'a' + r;            // Convert to a character from a-z
+            board[i][j] = toupper(c);
+            board2[i][i] = toupper(c);
+        }
+    }
 
+    print(board);
     guess();
     print(board);
 
