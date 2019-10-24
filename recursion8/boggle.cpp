@@ -11,9 +11,9 @@ char board[5][5] =
 {
     {'G', 'S', 'T', 'G', 'T'},
     {'A', 'A', 'R', 'L', 'S'},
-    {'P', 'D', 'L', 'E', 'S' },
+    {'A', 'D', 'L', 'E', 'S' },
     {'U', 'O', 'C', 'S', 'E'},
-    {'P', 'O', 'T', 'R', 'I'}
+    {'P', 'O', 'D', 'A', 'I'}
 };
 
 void print(char board[5][5]) {
@@ -25,64 +25,104 @@ void print(char board[5][5]) {
     }
 }
 
-bool check(string word, int x, int y, int index=1, string cur = "") {
+string strupper(string& str) {
+    string temp = "";
+    for (auto x: str) {
+        temp += toupper(x);
+    }
+    return temp;
+}
+
+string strlower(string& str) {
+    string temp = "";
+    for (auto x: str) {
+        temp += tolower(x);
+    }
+    return temp;
+}
+
+bool check(string word, int x, int y, int index=0, string cur = "") {
     usleep(50000);
+    cout << endl;
+    //char board2[5][5];
+    //board2 = board;
     print(board);
 
-    if(board[x][y] == putchar(toupper(word[word.size() - 1]))) {
+    if (x < 0 || y < 0 || x>4||y>4) {
+        //cout << "Cur is " << cur << endl;
+        //cout << "Word is" << word << " has been found! " << endl;
+        //cout << "t1" << endl;
+        return false;
+    }
+
+    if(word.compare(cur) == 0) {
+        //board[x][y] = word[index - 1];
+        cout << "Cur is " << cur << endl;
         cout << word << " has been found! " << endl;
         return true;
     }
 
-    if (board[x][y] != putchar(toupper(word[index]))) return false;
+    if (board[x][y] != word[index]) {
+        //cout << "t2" << endl;
+        return false;
+    }
 
     index++;
-    cur += board[x][y];
+    cur.push_back(board[x][y]);
+    //cout << cur;
+    //board[x][y] = 'x';
+
+    // can't go back to letter eg. pop can't do p, o then back to first p
 
     //north
     if (check(word, x, y-1, index, cur)) {
         return true;
     }
     //northeast
-    if (check(word, x+1, y-1, index)) {
+    if (check(word, x+1, y-1, index, cur)) {
         return true;
     }
     //east
-    if (check(word, x+1, y, index)) {
+    if (check(word, x+1, y, index, cur)) {
         return true;
     }
     //southeast
-    if (check(word, x+1, y+1, index)) {
+    if (check(word, x+1, y+1, index, cur)) {
         return true;
     }
     //south
-    if (check(word, x, y+1, index)) {
+    if (check(word, x, y+1, index, cur)) {
         return true;
     }
     //southwest
-    if (check(word, x-1, y+1, index)) {
+    if (check(word, x-1, y+1, index, cur)) {
         return true;
     }
     //west
-    if (check(word, x-1, y, index)) {
+    if (check(word, x-1, y, index, cur)) {
         return true;
     }
     //northwest
-    if (check(word, x-1, y-1, index)) {
+    if (check(word, x-1, y-1, index, cur)) {
         return true;
     }
 
+    return false;
 }
 
-void guess() {
+bool guess() {
     string word;
     cout << "Guess a word" << endl;
     cin >> word;
     vector<int> x, y;
+    bool found;
+
+    word = strupper(word);
+    cout << word << endl;;
 
     for (int i=0; i<5; i++) {
         for (int j = 0; j < 5; j++) {
-            if (board[i][j]==putchar(toupper(word[0]))) {
+            if (board[i][j]==word[0]) {
                 x.push_back(i);
                 y.push_back(j);
             }
@@ -90,18 +130,21 @@ void guess() {
     }
 
     for (int i = 0; i < x.size(); i++) {
-        cout << "yeet" << endl;
-        cout << x[i] << " " << y[i] << endl;
+        //cout << "yeet" << endl;
+        cout << endl << x[i] << " " << y[i] << endl;
     }
 
     for (int i = 0; i < x.size(); i++) {
         if (check(word, x[i], y[i]) == true) {
+            found = true;
             cout << "You found a word" << endl;
             guess();
-        } else {
-            cout << "Word's not there" << endl;
-            guess();
         }
+    }
+
+    if (!found) {
+        cout << "Word's not there" << endl;
+        guess();
     }
 }
 
