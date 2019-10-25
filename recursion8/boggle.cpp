@@ -1,22 +1,32 @@
-#include <ostream>
+#include <fstream>
 #include <string>
 #include <algorithm>
 #include <vector>
 #include <iostream>
 #include <unistd.h>
 
+
 using namespace std;
 
-char board[5][5];
-// {
-//     {'G', 'S', 'T', 'G', 'T'},
-//     {'A', 'A', 'R', 'L', 'S'},
-//     {'A', 'D', 'L', 'E', 'S' },
-//     {'U', 'O', 'C', 'S', 'E'},
-//     {'P', 'O', 'D', 'A', 'I'}
-// };
+char board[5][5] =
+{
+    {'G', 'S', 'T', 'G', 'T'},
+    {'A', 'A', 'R', 'L', 'S'},
+    {'A', 'D', 'L', 'E', 'S' },
+    {'U', 'O', 'C', 'S', 'E'},
+    {'P', 'O', 'D', 'A', 'I'}
+};
 
-char board2[5][5];
+char board2[5][5] =
+{
+    {'G', 'S', 'T', 'G', 'T'},
+    {'A', 'A', 'R', 'L', 'S'},
+    {'A', 'D', 'L', 'E', 'S' },
+    {'U', 'O', 'C', 'S', 'E'},
+    {'P', 'O', 'D', 'A', 'I'}
+};
+
+vector<string> dictionary;
 
 
 void print(char board[5][5]) {
@@ -27,6 +37,63 @@ void print(char board[5][5]) {
         cout << endl;
     }
 }
+
+void quickSort(vector<string> a, int start, int end)
+{
+
+        int i = start;
+        int j = end;
+
+        if (j - i >= 1)
+        {
+            string pivot = a[i];
+            while (j > i)
+            {
+                while (a[i].compare(pivot) <= 0 && i <= end && j > i){
+                    i++;
+                }
+                while (a[j].compare(pivot) >= 0 && j >= start && j >= i){
+                    j--;
+                }
+                if (j > i)
+                    swap(a[i], a[j]);
+                }
+
+            swap(a[start], a[j]);
+            quickSort(a, start, j - 1);
+            quickSort(a, j + 1, end);
+        }
+}
+
+
+int binarySearch(vector<string> arr, string x,int n)
+    {
+        int l = 0 ;
+        int r = n - 1;
+        while (l <= r)
+        {
+            int m = l + (r - l) / 2;
+
+        int res;
+        if (x == (arr[m]))
+            res = 0;
+
+
+            // Check if x is present at mid
+            if (res == 0)
+                return m;
+
+            // If x greater, ignore left half
+            if (x > (arr[m]))
+                l = m + 1;
+
+            // If x is smaller, ignore right half
+            else
+                r = m - 1;
+        }
+
+        return -1;
+    }
 
 string strupper(string& str) {
     string temp = "";
@@ -64,6 +131,11 @@ bool check(string word, int x, int y, int index=0, string cur = "") {
         //board[x][y] = word[index - 1];
         cout << "Cur is " << cur << endl;
         cout << word << " has been found! " << endl;
+        for (int i=0; i<5; i++) {
+            for (int j=0; j<5; j++) {
+                board2[i][j] = board[i][j];
+            }
+        }
         return true;
     }
 
@@ -74,8 +146,8 @@ bool check(string word, int x, int y, int index=0, string cur = "") {
 
     index++;
     cur.push_back(board2[x][y]);
-    //cout << cur;
-    //board[x][y] = 'x';
+    cout << cur;
+    board2[x][y] = 'x';
 
     // can't go back to letter eg. pop can't do p, o then back to first p
 
@@ -119,11 +191,13 @@ bool guess() {
     string word;
     cout << "Guess a word" << endl;
     cin >> word;
+
+    if (binarySearch(dictionary, word, dictionary.size() - 1) != -1) {
     vector<int> x, y;
     bool found;
 
     word = strupper(word);
-    cout << word << endl;;
+    cout << word << endl;
 
     for (int i=0; i<5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -151,21 +225,39 @@ bool guess() {
         cout << "Word's not there" << endl;
         guess();
     }
+    }
+    else {
+        cout << "Word is not in dictionary. Guess again." << endl;
+        guess();
+    }
 }
 
 int main() {
     char c;
     int r;
+    ifstream infile;
+    string str;
 
-    srand (time(NULL));    // initialize the random number generator
-    for (int i=0; i<6; i++) {
-        for (int j = 0; j < 6; j++) {
-            r = rand() % 26;   // generate a random number
-            c = 'a' + r;            // Convert to a character from a-z
-            board[i][j] = toupper(c);
-            board2[i][i] = toupper(c);
-        }
+    infile.open("dictionary.txt");
+
+    while(getline(infile, str)) {
+        cout << "yeet " << str << endl;
+        dictionary.push_back(str);
     }
+
+    infile.close();
+
+    quickSort(dictionary, 0, dictionary.size() - 1);
+
+    // srand (time(NULL));    // initialize the random number generator
+    // for (int i=0; i<6; i++) {
+    //     for (int j = 0; j < 6; j++) {
+    //         r = rand() % 26;   // generate a random number
+    //         c = 'a' + r;            // Convert to a character from a-z
+    //         board[i][j] = toupper(c);
+    //         board2[i][j] = toupper(c);
+    //     }
+    // }
 
     print(board);
     guess();
