@@ -38,7 +38,7 @@ void print(char board[5][5]) {
     }
 }
 
-void quickSort(vector<string> a, int start, int end)
+void quickSort(vector<string> &a, int start, int end)
 {
 
         int i = start;
@@ -65,35 +65,39 @@ void quickSort(vector<string> a, int start, int end)
         }
 }
 
+int binarySearch(vector<string> vec, string x, int n) {
+  int l = 0;
+  int r = n - 1;
+  while (l <= r) {
+    int m = l + (r - l) / 2;
 
-int binarySearch(vector<string> arr, string x,int n)
-    {
-        int l = 0 ;
-        int r = n - 1;
-        while (l <= r)
-        {
-            int m = l + (r - l) / 2;
+    int res;
+    if (x == (vec[m])) {
+        cout << "t1 " << vec[m] << endl;
+        res = 0;
+    }
 
-        int res;
-        if (x == (arr[m]))
-            res = 0;
-
-
-            // Check if x is present at mid
-            if (res == 0)
-                return m;
-
-            // If x greater, ignore left half
-            if (x > (arr[m]))
-                l = m + 1;
-
-            // If x is smaller, ignore right half
-            else
-                r = m - 1;
+    // Check if x is present at mid
+        if (res == 0) {
+            cout << "t2" << vec[m] << endl;
+            return m;
         }
 
-        return -1;
-    }
+        // If x greater, ignore left half
+        if (x > (vec[m])) {
+            cout << "t3" << vec[m] << endl;
+            l = m + 1;
+        }
+
+        // If x is smaller, ignore right half
+        else {
+            cout << "t4" << vec[m] << endl;
+            r = m - 1;
+        }
+  }
+
+  return -1;
+}
 
 string strupper(string& str) {
     string temp = "";
@@ -192,39 +196,39 @@ bool guess() {
     cout << "Guess a word" << endl;
     cin >> word;
 
-    if (binarySearch(dictionary, word, dictionary.size() - 1) != -1) {
-    vector<int> x, y;
-    bool found;
+    if (binarySearch(dictionary, word, dictionary.size()) != -1) {
+        vector<int> x, y;
+        bool found;
 
-    word = strupper(word);
-    cout << word << endl;
+        word = strupper(word);
+        cout << word << endl;
 
-    for (int i=0; i<5; i++) {
-        for (int j = 0; j < 5; j++) {
-            if (board[i][j]==word[0]) {
-                x.push_back(i);
-                y.push_back(j);
+        for (int i=0; i<5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (board[i][j]==word[0]) {
+                    x.push_back(i);
+                    y.push_back(j);
+                }
             }
         }
-    }
 
-    for (int i = 0; i < x.size(); i++) {
-        //cout << "yeet" << endl;
-        cout << endl << x[i] << " " << y[i] << endl;
-    }
+        for (int i = 0; i < x.size(); i++) {
+            //cout << "yeet" << endl;
+            cout << endl << x[i] << " " << y[i] << endl;
+        }
 
-    for (int i = 0; i < x.size(); i++) {
-        if (check(word, x[i], y[i]) == true) {
-            found = true;
-            cout << "You found a word" << endl;
+        for (int i = 0; i < x.size(); i++) {
+            if (check(word, x[i], y[i]) == true) {
+                found = true;
+                cout << "You found a word" << endl;
+                guess();
+            }
+        }
+
+        if (!found) {
+            cout << "Word's not there" << endl;
             guess();
         }
-    }
-
-    if (!found) {
-        cout << "Word's not there" << endl;
-        guess();
-    }
     }
     else {
         cout << "Word is not in dictionary. Guess again." << endl;
@@ -236,18 +240,29 @@ int main() {
     char c;
     int r;
     ifstream infile;
+    ofstream outfile;
     string str;
 
     infile.open("dictionary.txt");
 
     while(getline(infile, str)) {
-        cout << "yeet " << str << endl;
+        //cout << "yeet " << str << endl;
         dictionary.push_back(str);
     }
 
     infile.close();
 
     quickSort(dictionary, 0, dictionary.size() - 1);
+
+    outfile.open("sorted.txt");
+    for (auto x: dictionary) {
+        outfile << x << endl;
+    }
+    outfile.close();
+
+    // for (auto x: dictionary) {
+    //     cout << x << endl;
+    // }
 
     // srand (time(NULL));    // initialize the random number generator
     // for (int i=0; i<6; i++) {
