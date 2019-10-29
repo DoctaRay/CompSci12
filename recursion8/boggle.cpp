@@ -27,6 +27,7 @@ char board2[5][5] =
 };
 
 vector<string> dictionary;
+vector<string> wordsf;
 
 
 void print(char board[5][5]) {
@@ -70,30 +71,40 @@ int binarySearch(vector<string> vec, string x, int n) {
   int r = n - 1;
   while (l <= r) {
     int m = l + (r - l) / 2;
+    int res = x.compare(vec[m]);
 
-    int res;
-    if (x == (vec[m])) {
-        cout << "t1 " << vec[m] << endl;
-        res = 0;
-    }
+    // if (x == (vec[m])) {
+    //     cout << "t1 " << vec[m] << endl;
+    //     res = 0;
+    // }
 
     // Check if x is present at mid
         if (res == 0) {
-            cout << "t2" << vec[m] << endl;
+            //cout << "t2" << vec[m] << endl;
+            //wordsf.push_back(vec[m]);
             return m;
         }
 
         // If x greater, ignore left half
-        if (x > (vec[m])) {
-            cout << "t3" << vec[m] << endl;
+        if (res > 0) {
+            //cout << "t3" << vec[m] << endl;
             l = m + 1;
         }
 
         // If x is smaller, ignore right half
         else {
-            cout << "t4" << vec[m] << endl;
+            //cout << "t4" << vec[m] << endl;
             r = m - 1;
+            //cout << vec[m].compare(x) << endl;
+            /*cout << l << endl;
+            cout << r << endl;
+            cout << m << endl;
+            cout << res << endl;
+            cout << x << endl;
+            cout << x.compare(vec[m]) << endl;*/
+            //if(x.compare(vec[m]) == 0) return m;
         }
+
   }
 
   return -1;
@@ -133,8 +144,8 @@ bool check(string word, int x, int y, int index=0, string cur = "") {
 
     if(word.compare(cur) == 0) {
         //board[x][y] = word[index - 1];
-        cout << "Cur is " << cur << endl;
-        cout << word << " has been found! " << endl;
+        //cout << "Cur is " << cur << endl;
+        //cout << word << " has been found! " << endl;
         for (int i=0; i<5; i++) {
             for (int j=0; j<5; j++) {
                 board2[i][j] = board[i][j];
@@ -150,7 +161,7 @@ bool check(string word, int x, int y, int index=0, string cur = "") {
 
     index++;
     cur.push_back(board2[x][y]);
-    cout << cur;
+    //cout << cur;
     board2[x][y] = 'x';
 
     // can't go back to letter eg. pop can't do p, o then back to first p
@@ -191,17 +202,20 @@ bool check(string word, int x, int y, int index=0, string cur = "") {
     return false;
 }
 
-bool guess() {
+bool guess(vector<string> wordsf) {
     string word;
     cout << "Guess a word" << endl;
     cin >> word;
 
-    if (binarySearch(dictionary, word, dictionary.size()) != -1) {
+    int req = binarySearch(dictionary, word, dictionary.size());
+    //cout << req << endl;
+
+    if (req != -1 && binarySearch(wordsf, strupper(word), wordsf.size()) == -1) {
         vector<int> x, y;
         bool found;
 
         word = strupper(word);
-        cout << word << endl;
+        //cout << word << endl;
 
         for (int i=0; i<5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -217,22 +231,35 @@ bool guess() {
             cout << endl << x[i] << " " << y[i] << endl;
         }
 
+
         for (int i = 0; i < x.size(); i++) {
             if (check(word, x[i], y[i]) == true) {
                 found = true;
                 cout << "You found a word" << endl;
-                guess();
+                cout << "----------------------------------" << endl;
+                wordsf.push_back(word);
+                cout << "Words found so far" << endl;
+                for (auto x: wordsf) {
+                    cout << x << endl;
+                }
+                cout << "----------------------------------" << endl;
+                print(board);
+                cout << "----------------------------------" << endl;
+                guess(wordsf);
             }
         }
 
         if (!found) {
             cout << "Word's not there" << endl;
-            guess();
+            guess(wordsf);
         }
     }
-    else {
+    else if (req == -1) {
         cout << "Word is not in dictionary. Guess again." << endl;
-        guess();
+        guess(wordsf);
+    } else {
+        cout << "Word has already been found. Guess again" << endl;
+        guess(wordsf);
     }
 }
 
@@ -247,6 +274,7 @@ int main() {
 
     while(getline(infile, str)) {
         //cout << "yeet " << str << endl;
+        str.erase(str.length()-1);
         dictionary.push_back(str);
     }
 
@@ -254,28 +282,28 @@ int main() {
 
     quickSort(dictionary, 0, dictionary.size() - 1);
 
-    outfile.open("sorted.txt");
-    for (auto x: dictionary) {
-        outfile << x << endl;
-    }
-    outfile.close();
+    // outfile.open("sorted.txt");
+    // for (auto x: dictionary) {
+    //     outfile << x << endl;
+    // }
+    // outfile.close();
 
     // for (auto x: dictionary) {
     //     cout << x << endl;
     // }
 
-    // srand (time(NULL));    // initialize the random number generator
-    // for (int i=0; i<6; i++) {
-    //     for (int j = 0; j < 6; j++) {
-    //         r = rand() % 26;   // generate a random number
-    //         c = 'a' + r;            // Convert to a character from a-z
-    //         board[i][j] = toupper(c);
-    //         board2[i][j] = toupper(c);
-    //     }
-    // }
+     srand (time(NULL));    // initialize the random number generator
+     for (int i=0; i<6; i++) {
+         for (int j = 0; j < 6; j++) {
+             r = rand() % 26;   // generate a random number
+             c = 'a' + r;            // Convert to a character from a-z
+             board[i][j] = toupper(c);
+             board2[i][j] = toupper(c);
+         }
+     }
 
     print(board);
-    guess();
+    guess(wordsf);
     print(board);
 
 
