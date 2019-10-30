@@ -17,12 +17,12 @@ int main() {
     cout << bin.size() << endl;
     cout << hex.size() << endl;
 
-    // cout << "Enter number" << endl;
-    // cin >> num;
+    cout << "Enter number" << endl;
+    cin >> num;
 
     // 110 1111 0011
     //num = "11011110011";
-    num = "2EF8";
+    //num = "2EF8";
 
     cout << "1. Binary to hex. \n2. Hex to binary" << endl;
     cin >> choice;
