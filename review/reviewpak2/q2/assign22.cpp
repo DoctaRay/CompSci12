@@ -11,7 +11,7 @@
 
 using namespace std;
 
-struct Student 
+struct Student
 {
 	string name;
 	vector<int> grades;
@@ -22,22 +22,22 @@ vector<int> insertSort(const vector<int> &a) {
 	//cout << "var does not init" << endl;
 	unsigned int i, j;
 	int max;
-	vector<int> sortedArray = {a.size()};
+	vector<int> sortedArray = {};
 	sortedArray = a;
 
 	//cout << "for loop does not init" << endl;
 	for (int i = 0; i < a.size(); i++) {
 		for (j = i; j < a.size(); j++) {
 			if(sortedArray[i] < sortedArray[j]){
-				int tmp; 
+				int tmp;
 				tmp = sortedArray[i];
 				sortedArray[i] = sortedArray[j];
 				sortedArray[j] = tmp;
 			}
-		}		
+		}
 	}
 
-	
+
 	//cout << "does not return" << endl;
 	reverse(begin(sortedArray), end(sortedArray));
 	return sortedArray;
@@ -52,7 +52,7 @@ int m = 0;
 vector<int> mode(vector<int> a) {
 	vector<int> histogram;
 	vector<int> modes;
-	vector<int> fail = { 999 }; 
+	vector<int> fail = { 999 };
 	int highest = 0;
 	int count = 0;
 	bool check = false;
@@ -63,13 +63,13 @@ vector<int> mode(vector<int> a) {
 
 	for( int i=0; i<a.size(); ++i )
 		++histogram[a[i]];
-	
+
 	for (int i =0; i < a.size(); ++i) {
 		if (histogram[a[i]] >= m) {
 			highest = histogram[a[i]];
 			m = a[i];
-			// modes.push_back(m);			
-			
+			// modes.push_back(m);
+
 		}
 	}
 	//cout << highest << endl;
@@ -84,11 +84,11 @@ vector<int> mode(vector<int> a) {
 	for (int x: tempo) {
 		 if (x == highest) {
 			//cout << x << endl;
-			check = true;	
+			check = true;
 		}
 		else {
 			//cout << x << endl;
-			check == false;
+			check = false;
 			break;
 		}
 	}
@@ -106,22 +106,22 @@ vector<int> mode(vector<int> a) {
 			if (histogram[a[i]] == highest && !(find(begin(modes), end(modes), a[i])!=end(modes))) {
 			//	cout << "test runs" << endl;
 				modes.push_back(a[i]);
-			} 
-			
-		} 
+			}
+
+		}
 	}
 
 	/* if (count == a.size()) {
 		return fail;
 		cout << " no mode " << endl;
-	} */	
+	} */
 	/*cout << "Modes: ";
 	for (int x: modes) {
 		cout << x << " ";
 	}
 	cout << endl;*/
 
-	return modes;	
+	return modes;
 }
 
 int median(vector<int> a) {
@@ -146,8 +146,8 @@ int median(vector<int> a) {
 			cout << a[i] << "-";
 		}
 		cout << endl;*/
-	
-		return (int)((a[(a.size() / 2) - 1] + a[a.size() / 2]) / 2); 
+
+		return (int)((a[(a.size() / 2) - 1] + a[a.size() / 2]) / 2);
 	}
 	else {
 		//cout << "median two not works" << endl;
@@ -170,19 +170,19 @@ int main() {
 	bool valid = false;
 
 	for (int n = 0; n >= 0; n++) {
-			cout << "Enter name: ";
+			cout << "Enter name (-1 to quit): ";
 			cin >> name;
-			 	
+
 			marks.push_back(Student());
 			marks[n].name = name;
 			if (marks[n].name == "-1") {
 				marks.pop_back();
 				break;
 			}
-	
+
 				// write over here. finish valid check for grades 0-100
-		
-		cout << "Enter marks" << endl;
+
+		cout << "Enter marks (-1 to quit): " << endl;
 		for (int a = 0; a >= 0; a++) {
 			cin >> smark;
 			stringstream(smark) >> mark;
@@ -191,8 +191,8 @@ int main() {
 			}
 
 			if (mark < 0 ||  mark > 100) {
-				cout << "Enter mark again: " << endl;
-			      	continue;	
+				cout << "Enter mark again (-1 to quit): " << endl;
+			      	continue;
 			}
 			marks[n].grades.push_back(mark);
 		}
@@ -207,12 +207,12 @@ int main() {
 	}
 */
 	cout << "Here are the respective stats. 999 for mode means that there is no mode." << endl;
-	
+
 int total = 0;
 	/* for (int x: marks[0].grades) {
 		total += x;
 	}
-	int mean = (int)(total / marks[0].grades.size()); 
+	int mean = (int)(total / marks[0].grades.size());
 	*/
 	for (int i = 0; i < marks.size(); i++) {
 	cout << "Mode, median and mean of student " << i << "(" << marks[i].name <<  ") are ";
@@ -221,12 +221,12 @@ int total = 0;
        		for (int j = 0; j < modeR.size(); j++) {
 	       		cout << modeR[j] << ", ";
 		}
-		cout << " >, ";	
-		cout << median(marks[i].grades) << ", "; 
-		cout << setprecision(3) << mean(marks[i].grades) << "." << endl;  
-	
+		cout << " >, ";
+		cout << median(marks[i].grades) << ", ";
+		cout << setprecision(3) << mean(marks[i].grades) << "." << endl;
+
 	/* cout << mode(marks[0].grades) << endl;
-       	cout << median(marks[0].grades) << endl; 
+       	cout << median(marks[0].grades) << endl;
 	cout << mean(marks[0].grades) << endl;
 	cout << "The size of array is " << marks[0].grades.size() << endl;
 	*/
@@ -243,12 +243,12 @@ int total = 0;
 			grades[name]=marks;
 		}
 	}
-	 map<string, vector<int>>::iterator itr; 
-	cout << "\nThe map grades is : \n"; 
-	cout << "\tKEY\tELEMENT\n"; 
+	 map<string, vector<int>>::iterator itr;
+	cout << "\nThe map grades is : \n";
+	cout << "\tKEY\tELEMENT\n";
 	for (auto it = grades.begin(); it != grades.end(); ++it) {
-	       for (int a = 0; a < it -> first.size(); a++)	
-		cout << '\t' << it -> first << '\t' << it->second << '\n';       
-	} 
-	cout << endl; */ 
+	       for (int a = 0; a < it -> first.size(); a++)
+		cout << '\t' << it -> first << '\t' << it->second << '\n';
+	}
+	cout << endl; */
 }

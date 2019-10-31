@@ -33,7 +33,6 @@ void showstackChar(stack <string> s)
 int main() {
     stack <int> nums;
     stack <string> ops;
-    stringstream ss;
     string exp;
     string final;
 
@@ -51,7 +50,7 @@ int main() {
 
     string t = "lelelel";
 
-    vector<string> signs = {"+", "-", "/", "*", "^"};
+    vector<string> signs = {"/", "*", "^"};
 
     //cout << exp[1] << endl;
 
@@ -61,21 +60,23 @@ int main() {
     //   cout << typeid(exp).name() << endl;
     //   cout << typeid("+").name()<< endl;
       for (auto y: signs) {
-          cout << y << endl;
+          //cout << y << endl;
           if (s == y) {
             cout << "else" << s << endl;
             ops.push(s);
             marked = true;
-            found = true;
+            //found = true;
             break;
           }
+
       }
 
-      if (!found) {
+      stringstream ss(s);
+            int n = 0;
+            ss >> n;
+
+      if (marked) {
           cout << "if" << s << endl;
-            int n;
-            ss >> s;
-            ss << n;
             nums.push(n);
             if (marked) {
                 cout << "marked" << endl;
@@ -104,6 +105,7 @@ int main() {
             }
             found = false;
         }
+
     }
 
     showstack(nums);
