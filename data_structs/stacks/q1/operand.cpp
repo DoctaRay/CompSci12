@@ -12,20 +12,22 @@ using namespace std;
 
 void showstack(stack <int> s)
 {
-    while (!s.empty())
+    stack<int> temp = s;
+    while (!temp.empty())
     {
-        cout << '\t' << s.top();
-        s.pop();
+        cout << '\t' << temp.top();
+        temp.pop();
     }
     cout << '\n';
 }
 
 void showstackChar(stack <string> s)
 {
-    while (!s.empty())
+    stack<string> temp = s;
+    while (!temp.empty())
     {
-        cout << '\t' << s.top();
-        s.pop();
+        cout << '\t' << temp.top();
+        temp.pop();
     }
     cout << '\n';
 }
@@ -39,7 +41,7 @@ int main() {
     cout << "Input an expression to evaluate" << endl;
     //getline(cin, exp);
     //exp = "3 + 6/3 * 2^3 - 1";
-    exp = "6 / 3";
+    exp = "6 ^ 2 + 5";
 
     exp.erase(remove_if(exp.begin(), exp.end(), ::isspace), exp.end());
 
@@ -51,11 +53,20 @@ int main() {
     string t = "lelelel";
 
     vector<string> signs = {"/", "*", "^"};
+    vector<string> bin = {"+", "-"};
 
-    //cout << exp[1] << endl;
+    cout << exp[0] << endl;
 
-    for (int x = 0; x < exp.size(); x++) {
-      std::string s = exp.substr(x, 1);
+    //get first char before search loop
+    string temp = exp.substr(0, 1);
+    stringstream tt(temp);
+    int x = 0;
+    tt >> x;
+    nums.push(x);
+    cout << exp.size() << endl;
+    for (int x = 1; x < exp.size(); x++) {
+      std::string s(1, exp[x]);
+      cout << s << endl;
     //   cout << typeid(s).name() << endl;
     //   cout << typeid(exp).name() << endl;
     //   cout << typeid("+").name()<< endl;
@@ -66,17 +77,27 @@ int main() {
             ops.push(s);
             marked = true;
             //found = true;
-            break;
+            goto aa;
           }
 
       }
 
-      stringstream ss(s);
-            int n = 0;
-            ss >> n;
+      for (auto y: bin) {
+          if (s == y) {
+            cout << "else" << s << endl;
+            ops.push(s);
+            marked = true;
+            //found = true;
+            goto aa;
+          }
+      }
+
 
       if (marked) {
-          cout << "if" << s << endl;
+            stringstream ss(s);
+            int n = 0;
+            ss >> n;
+            cout << "if" << s << endl;
             nums.push(n);
             if (marked) {
                 cout << "marked" << endl;
@@ -84,6 +105,7 @@ int main() {
                     int second = nums.top();
                     nums.pop();
                     int first = nums.top();
+                    nums.pop();
                     cout << first << " / " << second << endl;
                     ops.pop();
                     nums.push(first / second);
@@ -91,6 +113,7 @@ int main() {
                     int second = nums.top();
                     nums.pop();
                     int first = nums.top();
+                    nums.pop();
                     ops.pop();
                     cout << first << " * " << second << endl;
                     nums.push(first * second);
@@ -98,14 +121,38 @@ int main() {
                     int second = nums.top();
                     nums.pop();
                     int first = nums.top();
+                    nums.pop();
                     ops.pop();
                     cout << first << " ^ " << second << endl;
                     nums.push(pow(first, second));
+                    showstack(nums);
+                    showstackChar(ops);
                 }
             }
-            found = false;
+            marked = false;
         }
 
+        aa: {
+            if (ops.top() == "+") {
+                    int second = nums.top();
+                    nums.pop();
+                    int first = nums.top();
+                    nums.pop();
+                    cout << first << " + " << second << endl;
+                    ops.pop();
+                    nums.push(first + second);
+                } else if (ops.top() == "-") {
+                    int second = nums.top();
+                    nums.pop();
+                    int first = nums.top();
+                    nums.pop();
+                    ops.pop();
+                    cout << first << " - " << second << endl;
+                    nums.push(first - second);
+                }
+        }
+
+    //end of loop
     }
 
     showstack(nums);
