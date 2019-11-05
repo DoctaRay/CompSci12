@@ -21,7 +21,6 @@ int main(int argc, const char** argv) {
     srand(time(0));
     string name;
 
-    int r = (rand() % 10) + 1;
 
     while(true) {
         cout << "Enter a list of names to simulate" << endl;
@@ -34,9 +33,11 @@ int main(int argc, const char** argv) {
 
     int choice;
 
-    cout << "The random num is " << r << endl;
 
     while (true) {
+        int r = (rand() % 10) + 1;
+            cout << "The random num is " << r << endl;
+
         if (list.size() == 1) {
             //cout << "lol";
             break;
