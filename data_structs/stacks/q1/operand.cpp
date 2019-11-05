@@ -41,7 +41,7 @@ int main() {
     cout << "Input an expression to evaluate" << endl;
     //getline(cin, exp);
     //exp = "3 + 6/3 * 2^3 - 1";
-    exp = "6 ^ 2 + 5";
+    exp = "6 ^ 2 / 9 + 5";
 
     exp.erase(remove_if(exp.begin(), exp.end(), ::isspace), exp.end());
 
@@ -64,12 +64,16 @@ int main() {
     tt >> x;
     nums.push(x);
     cout << exp.size() << endl;
+
+    //start search
     for (int x = 1; x < exp.size(); x++) {
       std::string s(1, exp[x]);
-      cout << s << endl;
+      cout << "yo" << s << endl;
     //   cout << typeid(s).name() << endl;
     //   cout << typeid(exp).name() << endl;
     //   cout << typeid("+").name()<< endl;
+
+    //checking if it's multiplication, division or exponents
       for (auto y: signs) {
           //cout << y << endl;
           if (s == y) {
@@ -82,6 +86,7 @@ int main() {
 
       }
 
+    //checking if its add or subtract
       for (auto y: bin) {
           if (s == y) {
             cout << "else" << s << endl;
@@ -97,9 +102,9 @@ int main() {
             stringstream ss(s);
             int n = 0;
             ss >> n;
-            cout << "if" << s << endl;
+            cout << "if " << s << endl;
             nums.push(n);
-            if (marked) {
+
                 cout << "marked" << endl;
                 if (ops.top() == "/") {
                     int second = nums.top();
@@ -109,6 +114,8 @@ int main() {
                     cout << first << " / " << second << endl;
                     ops.pop();
                     nums.push(first / second);
+                    showstack(nums);
+                    showstackChar(ops);
                 } else if (ops.top() == "*") {
                     int second = nums.top();
                     nums.pop();
@@ -117,6 +124,8 @@ int main() {
                     ops.pop();
                     cout << first << " * " << second << endl;
                     nums.push(first * second);
+                    showstack(nums);
+                    showstackChar(ops);
                 } else if (ops.top() == "^") {
                     int second = nums.top();
                     nums.pop();
@@ -128,36 +137,58 @@ int main() {
                     showstack(nums);
                     showstackChar(ops);
                 }
-            }
+
             marked = false;
         }
 
         aa: {
-            if (ops.top() == "+") {
-                    int second = nums.top();
-                    nums.pop();
-                    int first = nums.top();
-                    nums.pop();
-                    cout << first << " + " << second << endl;
-                    ops.pop();
-                    nums.push(first + second);
-                } else if (ops.top() == "-") {
-                    int second = nums.top();
-                    nums.pop();
-                    int first = nums.top();
-                    nums.pop();
-                    ops.pop();
-                    cout << first << " - " << second << endl;
-                    nums.push(first - second);
-                }
+            // if (ops.top() == "+") {
+            //     int second = nums.top();
+            //     nums.pop();
+            //     int first = nums.top();
+            //     nums.pop();
+            //     cout << first << " + " << second << endl;
+            //     ops.pop();
+            //     nums.push(first + second);
+            // } else if (ops.top() == "-") {
+            //     int second = nums.top();
+            //     nums.pop();
+            //     int first = nums.top();
+            //     nums.pop();
+            //     ops.pop();
+            //     cout << first << " - " << second << endl;
+            //     nums.push(first - second);
+            // }
+
         }
 
     //end of loop
     }
 
+    for (int i = 0; i < ops.size(); i++) {
+         if (ops.top() == "+") {
+                int second = nums.top();
+                nums.pop();
+                int first = nums.top();
+                nums.pop();
+                cout << first << " + " << second << endl;
+                ops.pop();
+                nums.push(first + second);
+            } else if (ops.top() == "-") {
+                int second = nums.top();
+                nums.pop();
+                int first = nums.top();
+                nums.pop();
+                ops.pop();
+                cout << first << " - " << second << endl;
+                nums.push(first - second);
+            }
+    }
+
     showstack(nums);
     showstackChar(ops);
 
+    cout << "The answer is " << nums.top() << endl;
 
 
 
