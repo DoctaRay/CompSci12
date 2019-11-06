@@ -3,14 +3,14 @@ package email;
 import java.io.*;
 import java.util.*;
 
-public class EMail {
+public class Email {
 
     public static void main(String[] args) throws FileNotFoundException {
       Scanner input = new Scanner(new File("data11.txt"));  //data.txt  for test data
-      ArrayList<String> unique = new ArrayList();
+      ArrayList<String> unique = new ArrayList<String>();
        while(input.hasNext()){
        int num = input.nextInt();
-      
+
        for(int c=0;c<num;c++){
            String email = input.next().toLowerCase();           //case insensitive
            String first=email.substring(0,email.indexOf("@"));  //email before the @ symbol
@@ -22,8 +22,8 @@ public class EMail {
        }
        System.out.println(unique.size());  //number of unique emails is the amount in the array
        unique.clear();  //clear the array for next data set
-        
+
        }
-    
-    }    
+
+    }
 }
