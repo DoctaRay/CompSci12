@@ -39,9 +39,9 @@ int main() {
     string final;
 
     cout << "Input an expression to evaluate" << endl;
-    //getline(cin, exp);
+    getline(cin, exp);
     //exp = "3 + 6/3 * 2^3 - 1";
-    exp = "6 ^ 2 / 9 + 5";
+    //exp = "6 ^ 2 / 9 + 5";
 
     exp.erase(remove_if(exp.begin(), exp.end(), ::isspace), exp.end());
 
