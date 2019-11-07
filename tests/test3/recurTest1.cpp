@@ -4,18 +4,19 @@
 using namespace std;
 
     // 2n + 3
-int eq1(int n, int term, int finalTerm, int count) {
-    if (term == finalTerm) return count;
+int eq1(int n, int term, int finalTerm, int val) {
+    if (term == finalTerm) return val;
 
     if (finalTerm % 2 != 0) {
-        count = count * 2 + 3;
+        val = val * 2 + 3;
         finalTerm++;
     } else {
-        count = count -2;
+        val = val -2;
         finalTerm++;
     }
 
-    return eq1(n, term, finalTerm, count);
+    //return value here if the return type is not a bool or void
+    return eq1(n, term, finalTerm, val);
 
 
 }

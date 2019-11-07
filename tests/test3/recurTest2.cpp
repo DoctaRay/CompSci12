@@ -5,11 +5,14 @@
 using namespace std;
 
 string check2(string input, int icount, string cipher, string alpha, string encrypt = "") {
-    encrypt+= " ";
+    //encrypt+= "";
     if (icount == input.length()) return encrypt;
 
     else {
-        encrypt+=cipher.substr(alpha.find(input.substr(icount, 1)), cipher.size() - alpha.find(input.substr(icount, 1))+1);
+        encrypt+=cipher.substr(alpha.find(input.substr(icount, 1)),1
+         //cipher.size() - alpha.find(input.substr(icount, 1))+1
+         );
+        //cout << encrypt << endl;
         }
     icount++;
 
@@ -41,11 +44,14 @@ int main(int argc, const char** argv) {
 
     getline(myFile, cipher);
 
+    cipher+= " ";
     cout << cipher.size() << endl;
     cout << cipher << endl;
 
-    cout << "Enter text to be encrypted" << endl;
-    getline(cin, input);
+    // cout << "Enter text to be encrypted" << endl;
+    // getline(cin, input);
+
+    input = "have a nice day";
 
     cout << "text is " << check2(input, 0, cipher, alphabet) << endl;
 

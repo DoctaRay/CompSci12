@@ -144,12 +144,13 @@ int main() {
         else if (choice == 2) {
             vector<int> col;
             vector<int> temp;
-            int x, y = 0;
+            int x = 0, y = 0;
 
 
             for (int i = 0; i < total.size(); i++) {
                 //adding admin
                 x += total[i].admin[0] + total[i].teacher[0] + total[i].student[0];
+                //cout << x << endl;
                 y += total[i].admin[1] + total[i].teacher[1] + total[i].student[1];
 
             }

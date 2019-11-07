@@ -8,7 +8,7 @@ void triangle(int x, int y, string stars) {
     if (stars.length() < y) {
         stars+='*';
         if(stars.length()<y)cout << stars << endl;
-        triangle(x, y, stars);
+            triangle(x, y, stars);
     }
     cout << stars << endl;
 
