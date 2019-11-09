@@ -114,6 +114,7 @@ int main() {
                     cout << first << " / " << second << endl;
                     ops.pop();
                     nums.push(first / second);
+                    goto aa;
                     showstack(nums);
                     showstackChar(ops);
                 } else if (ops.top() == "*") {
@@ -124,6 +125,7 @@ int main() {
                     ops.pop();
                     cout << first << " * " << second << endl;
                     nums.push(first * second);
+                    goto aa;
                     showstack(nums);
                     showstackChar(ops);
                 } else if (ops.top() == "^") {
@@ -134,6 +136,7 @@ int main() {
                     ops.pop();
                     cout << first << " ^ " << second << endl;
                     nums.push(pow(first, second));
+                    goto aa;
                     showstack(nums);
                     showstackChar(ops);
                 }
@@ -142,31 +145,8 @@ int main() {
         }
 
         aa: {
-            // if (ops.top() == "+") {
-            //     int second = nums.top();
-            //     nums.pop();
-            //     int first = nums.top();
-            //     nums.pop();
-            //     cout << first << " + " << second << endl;
-            //     ops.pop();
-            //     nums.push(first + second);
-            // } else if (ops.top() == "-") {
-            //     int second = nums.top();
-            //     nums.pop();
-            //     int first = nums.top();
-            //     nums.pop();
-            //     ops.pop();
-            //     cout << first << " - " << second << endl;
-            //     nums.push(first - second);
-            // }
-
-        }
-
-    //end of loop
-    }
-
-    for (int i = 0; i < ops.size(); i++) {
-         if (ops.top() == "+") {
+            for (int i = 0; i < ops.size(); i++) {
+                if (ops.top() == "+") {
                 int second = nums.top();
                 nums.pop();
                 int first = nums.top();
@@ -184,6 +164,31 @@ int main() {
                 nums.push(first - second);
             }
     }
+
+        }
+
+    //end of loop
+    }
+
+    // for (int i = 0; i < ops.size(); i++) {
+    //      if (ops.top() == "+") {
+    //             int second = nums.top();
+    //             nums.pop();
+    //             int first = nums.top();
+    //             nums.pop();
+    //             cout << first << " + " << second << endl;
+    //             ops.pop();
+    //             nums.push(first + second);
+    //         } else if (ops.top() == "-") {
+    //             int second = nums.top();
+    //             nums.pop();
+    //             int first = nums.top();
+    //             nums.pop();
+    //             ops.pop();
+    //             cout << first << " - " << second << endl;
+    //             nums.push(first - second);
+    //         }
+    // }
 
     showstack(nums);
     showstackChar(ops);
