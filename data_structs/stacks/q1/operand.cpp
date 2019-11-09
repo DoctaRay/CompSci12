@@ -32,6 +32,33 @@ void showstackChar(stack <string> s)
     cout << '\n';
 }
 
+void inter(stack<int>& nums, stack<string>& ops) {
+
+            if (ops.top() == "+") {
+                int second = nums.top();
+                nums.pop();
+                int first = nums.top();
+                nums.pop();
+                cout << first << " + " << second << endl;
+                ops.pop();
+                nums.push(first + second);
+                showstack(nums);
+                showstackChar(ops);
+            } else if (ops.top() == "-") {
+                int second = nums.top();
+                nums.pop();
+                int first = nums.top();
+                nums.pop();
+                ops.pop();
+                cout << first << " - " << second << endl;
+                nums.push(first - second);
+                showstack(nums);
+                showstackChar(ops);
+            }
+
+
+}
+
 int main() {
     stack <int> nums;
     stack <string> ops;
@@ -39,9 +66,10 @@ int main() {
     string final;
 
     cout << "Input an expression to evaluate" << endl;
-    getline(cin, exp);
+    //getline(cin, exp);
     //exp = "3 + 6/3 * 2^3 - 1";
     //exp = "6 ^ 2 / 9 + 5";
+    exp = "2 + 3 * 5 - 9 / 3 + 2 ^ 3";
 
     exp.erase(remove_if(exp.begin(), exp.end(), ::isspace), exp.end());
 
@@ -114,9 +142,9 @@ int main() {
                     cout << first << " / " << second << endl;
                     ops.pop();
                     nums.push(first / second);
-                    goto aa;
                     showstack(nums);
                     showstackChar(ops);
+                    inter(nums, ops);
                 } else if (ops.top() == "*") {
                     int second = nums.top();
                     nums.pop();
@@ -125,9 +153,9 @@ int main() {
                     ops.pop();
                     cout << first << " * " << second << endl;
                     nums.push(first * second);
-                    goto aa;
                     showstack(nums);
                     showstackChar(ops);
+                    inter(nums, ops);
                 } else if (ops.top() == "^") {
                     int second = nums.top();
                     nums.pop();
@@ -136,34 +164,32 @@ int main() {
                     ops.pop();
                     cout << first << " ^ " << second << endl;
                     nums.push(pow(first, second));
-                    goto aa;
                     showstack(nums);
                     showstackChar(ops);
+                    inter(nums, ops);
                 }
 
             marked = false;
         }
 
         aa: {
-            for (int i = 0; i < ops.size(); i++) {
-                if (ops.top() == "+") {
-                int second = nums.top();
-                nums.pop();
-                int first = nums.top();
-                nums.pop();
-                cout << first << " + " << second << endl;
-                ops.pop();
-                nums.push(first + second);
-            } else if (ops.top() == "-") {
-                int second = nums.top();
-                nums.pop();
-                int first = nums.top();
-                nums.pop();
-                ops.pop();
-                cout << first << " - " << second << endl;
-                nums.push(first - second);
-            }
-    }
+            // if (ops.top() == "+") {
+            //     int second = nums.top();
+            //     nums.pop();
+            //     int first = nums.top();
+            //     nums.pop();
+            //     cout << first << " + " << second << endl;
+            //     ops.pop();
+            //     nums.push(first + second);
+            // } else if (ops.top() == "-") {
+            //     int second = nums.top();
+            //     nums.pop();
+            //     int first = nums.top();
+            //     nums.pop();
+            //     ops.pop();
+            //     cout << first << " - " << second << endl;
+            //     nums.push(first - second);
+            // }
 
         }
 
