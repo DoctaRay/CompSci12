@@ -27,8 +27,10 @@ int main(int argc, const char** argv) {
 
 //     public static void main(String[] args) throws FileNotFoundException {
 //       Scanner input = new Scanner(new File("data11.txt"));  //data.txt  for test data
-    ifstream myFile;
-    myFile.open("data11.txt");
+    // ifstream myFile;
+    // myFile.open("data11.txt");
+
+    FILE * myFile;
 
 //       ArrayList<String> unique = new ArrayList<String>();
     vector<string> unique;
@@ -37,12 +39,13 @@ int main(int argc, const char** argv) {
     string second;
     int plusLoc;
 //        while(input.hasNext()){
-    while(!myFile.eof()){
+    while(feof(myFile)){
         usleep(3000000);
 
 //        int num = input.nextInt();
         int num;
         myFile >> num;
+
         //cout << num << endl;
 
 
