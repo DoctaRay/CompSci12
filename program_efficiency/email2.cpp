@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <stdio.h>
+#include <limits.h>
 
 using namespace std;
 
@@ -21,6 +22,27 @@ void ReplaceAll(std::string& str, const std::string& from, const std::string& to
     }
 }
 
+enum STR2INT_ERROR { SUCCESS, OVERFLOW, UNDERFLOW, INCONVERTIBLE };
+
+STR2INT_ERROR str2int (int &i, char const *s, int base = 0)
+{
+    char *end;
+    long  l;
+    errno = 0;
+    l = strtol(s, &end, base);
+    if ((errno == ERANGE && l == LONG_MAX) || l > INT_MAX) {
+        return OVERFLOW;
+    }
+    if ((errno == ERANGE && l == LONG_MIN) || l < INT_MIN) {
+        return UNDERFLOW;
+    }
+    if (*s == '\0' || *end != '\0') {
+        return INCONVERTIBLE;
+    }
+    i = l;
+    return SUCCESS;
+}
+
 // public class Email {
 int main(int argc, const char** argv) {
     clock_t start = clock();
@@ -30,7 +52,7 @@ int main(int argc, const char** argv) {
     // ifstream myFile;
     // myFile.open("data11.txt");
 
-    FILE * myFile;
+    FILE * myFile = fopen("data11.txt", "r");
 
 //       ArrayList<String> unique = new ArrayList<String>();
     vector<string> unique;
@@ -38,21 +60,27 @@ int main(int argc, const char** argv) {
     string first;
     string second;
     int plusLoc;
+    char num [1];
+    int accnum;
 //        while(input.hasNext()){
     while(feof(myFile)){
         usleep(3000000);
 
 //        int num = input.nextInt();
-        int num;
-        myFile >> num;
+
+        //getline(cin, num);
+        fgets(num, 1, myFile);
+        str2int(accnum, num);
 
         //cout << num << endl;
 
 
 //        for(int c=0;c<num;c++){
-        for (int c = 0; c < num; c++) {
+        for (int c = 0; c < accnum; c++) {
 //            String email = input.next().toLowerCase();           //case insensitive
                 myFile >> email;
+                
+
                 transform(email.begin(), email.end(), email.begin(), [](unsigned char c){ return std::tolower(c); });
 //            String first=email.substring(0,email.indexOf("@"));  //email before the @ symbol
                 first = email.substr(0, email.find("@"));

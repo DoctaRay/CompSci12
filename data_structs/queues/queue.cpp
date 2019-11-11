@@ -23,7 +23,7 @@ int main(int argc, const char** argv) {
 
 
     while(true) {
-        cout << "Enter a list of names to simulate" << endl;
+        cout << "Enter a list of names to simulate (-1 to terminate)" << endl;
         cin >> name;
         if (name == "-1") {
             break;
