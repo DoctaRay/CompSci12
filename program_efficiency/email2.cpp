@@ -1,7 +1,12 @@
+/*
+use c++11
+*/
+
 // package email;
 
 // import java.io.*;
 // import java.util.*;
+#include <cstdio>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -43,6 +48,16 @@ STR2INT_ERROR str2int (int &i, char const *s, int base = 0)
     return SUCCESS;
 }
 
+string convertToString(char* a, int size) 
+{ 
+    int i; 
+    string s = ""; 
+    for (i = 0; i < size; i++) { 
+        s = s + a[i]; 
+    } 
+    return s; 
+} 
+
 // public class Email {
 int main(int argc, const char** argv) {
     clock_t start = clock();
@@ -61,27 +76,33 @@ int main(int argc, const char** argv) {
     string second;
     int plusLoc;
     char num [1];
+    char email2 [20];
     int accnum;
 //        while(input.hasNext()){
-    while(feof(myFile)){
+    while(!feof(myFile)){
         usleep(3000000);
 
 //        int num = input.nextInt();
 
         //getline(cin, num);
         fgets(num, 1, myFile);
-        str2int(accnum, num);
+        accnum = atoi(email2);
+        printf("%d chi", accnum);
 
         //cout << num << endl;
 
 
 //        for(int c=0;c<num;c++){
-        for (int c = 0; c < accnum; c++) {
+        for (int c = 0; c < accnum && fgets(email2, sizeof(email2), myFile) != NULL; c++) {
 //            String email = input.next().toLowerCase();           //case insensitive
-                myFile >> email;
-                
+                //myFile >> email;
+                //printf("%d", sizeof(email));
+                email = convertToString(email2, 20);
+                printf("%s dud", email2);
 
                 transform(email.begin(), email.end(), email.begin(), [](unsigned char c){ return std::tolower(c); });
+                //transform(email, email+20, email, [](unsigned char c){ return std::tolower(c); });
+
 //            String first=email.substring(0,email.indexOf("@"));  //email before the @ symbol
                 first = email.substr(0, email.find("@"));
 //            first=first.replaceAll("\\.", "");                   //dots before @ ignored
