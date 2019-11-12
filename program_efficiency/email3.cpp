@@ -37,6 +37,7 @@ int main(int argc, const char** argv) {
     string second ="";
     int plusLoc;
     bool isInside = false;
+    int count = 0;
 //        while(input.hasNext()){
     while(!myFile.eof()){
         //usleep(3000000);
@@ -44,7 +45,7 @@ int main(int argc, const char** argv) {
 //        int num = input.nextInt();
         int num;
         myFile >> num;
-        printf("%d\n", num);
+        //printf("%d\n", num);
         //cout << num << endl;
 
 
@@ -57,6 +58,7 @@ int main(int argc, const char** argv) {
                     email[i] = tolower(email[i]);
                 }
                 //printf("lowercase email %s\n", email.c_str());
+
 //            String first=email.substring(0,email.indexOf("@"));  //email before the @ symbol
                 //first = email.substr(0, email.find("@"));
                 for (int i = 0; i < email.length(); i++) {
@@ -101,7 +103,7 @@ int main(int argc, const char** argv) {
                 }
 //            if(plusLoc>=0)first=first.substring(0,plusLoc);     //+ and string after ignored
                 if(plusLoc>= 0) {
-                    first = first.substr(0, plusLoc);
+                    //first = first.substr(0, plusLoc);
                     for (int i = 0; i < plusLoc; i++) {
                         first.push_back(email[i]);
                     }
@@ -116,6 +118,7 @@ int main(int argc, const char** argv) {
 
                 if(!isInside) {
                     //cout << "works!" << endl;
+                    //printf("final %s \n", (first + second).c_str());
                     unique.push_back(first+second);
                 }
                 second = "";
@@ -125,15 +128,17 @@ int main(int argc, const char** argv) {
 //        System.out.println(unique.size());  //number of unique emails is the amount in the array
         //cout << unique.size() << endl;
         //int n = (int)unique.size();
-        printf("found %d\n", (int)unique.size());
+        printf("founded %d\n", (int)unique.size());
         //cout << "--------------------" << endl;
 //        unique.clear();  //clear the array for next data set
+        isInside = false;
         unique.clear();
 //        }
 
 //     }
 // }
-        //break;
+        // count++;
+        // if (count == 2) break;
     }
     printf("Time taken: %.2fs\n", (double)(clock() - start)/CLOCKS_PER_SEC);
     return 0;
