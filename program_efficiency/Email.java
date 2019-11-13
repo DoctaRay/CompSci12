@@ -6,7 +6,7 @@ import java.util.*;
 public class Email {
 
     public static void main(String[] args) throws FileNotFoundException {
-      Scanner input = new Scanner(new File("data11.txt"));  //data.txt  for test data
+      Scanner input = new Scanner(new File("program_efficiency/data11.txt"));  //data.txt  for test data
       ArrayList<String> unique = new ArrayList<String>();
        while(input.hasNext()){
        int num = input.nextInt();
