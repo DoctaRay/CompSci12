@@ -70,11 +70,7 @@ int main(int argc, const char** argv) {
                     }
                 }
                 //printf("removing dots %s\n", first.c_str());
-
-
-
-
-
+                
 
                 for (int i = 0; i < first.length(); i++) {
                     if (first[i] == '+') {
