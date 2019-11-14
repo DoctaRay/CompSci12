@@ -1,3 +1,5 @@
+image:
+  file: .gitpod.dockerfile
 vscode:
   extensions:
     - hars.CppSnippets@0.0.14:d9VwbSfM8Lu6jSqLKsmohg==
