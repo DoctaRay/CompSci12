@@ -1,9 +1,3 @@
-/*
-- Implement quick sort
-- Implement binary search
-- 
-*/
-
 #include <iostream>
 #include <fstream>
 #include <vector>
