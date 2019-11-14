@@ -1,4 +1,4 @@
-#include </workspace/CompSci12/boost_1_71_0/boost/lambda/lambda.hpp>
+#include <boost/lambda/lambda.hpp>
 #include <iostream>
 #include <iterator>
 #include <algorithm>
