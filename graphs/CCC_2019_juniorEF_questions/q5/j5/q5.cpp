@@ -13,7 +13,7 @@ struct Replacement {
 };
 
 struct Node {
-    int prev; //indices of previous coordinate string
+    string prev; 
     //int next;
     Replacement how; // how it was done
     string curr;
@@ -36,8 +36,9 @@ void findAllOccurances(std::string data, std::string toSearch [2], int ruleNum, 
 		//vec.push_back(pos);
         temp.replace(pos, toSearch[0].length(), toSearch[1]);
         cout << temp << endl;
+        cout << "wut " << endl;
         t.curr = temp;
-        t.prev = prevIndex;
+        t.prev = data;
         nodeLevel.push_back(t);
  
 		// Get the next occurrence from the current position
@@ -50,7 +51,7 @@ int main(int argc, const char** argv) {
     //unordered_map< string, list< pair<string, int> > > adjacencyList(vertices + 1);
 
     ifstream file;
-    file.open("data1.txt");
+    file.open("data2.txt");
     int index;
     string init,fin;
 
@@ -90,7 +91,7 @@ int main(int argc, const char** argv) {
     t.how.index = 0;
     t.how.ruleNum = 0;
     t.curr = init;
-    t.prev = 0;
+    t.prev = "";
     list[0].push_back(t);
 
     for (int j = 0; j + 1< list.size(); j++) {
@@ -100,15 +101,38 @@ int main(int argc, const char** argv) {
             cout << "iter " << j << " " << i << endl;
             cout << x[i].curr << endl;
             cout << "One" << endl;
-            findAllOccurances(x[i].curr, one, 1, i, list[j+1]);
+            findAllOccurances(x[i].curr, rules[0], 1, i, list[j+1]);
             cout << "Two" << endl;
-            findAllOccurances(x[i].curr, two, 2, i, list[j+1]);
+            findAllOccurances(x[i].curr, rules[1], 2, i, list[j+1]);
             cout << "Three" << endl;
-            findAllOccurances(x[i].curr, three, 3, i, list[j+1]);
+            findAllOccurances(x[i].curr, rules[2], 3, i, list[j+1]);
             cout << "------------------------" << endl;
         }
         cout << list[j+1].size() << endl;
         cout << "*******************" << endl;
+    }
+
+    string textToFind = fin;
+    vector<Node> result;
+    for (int i = steps; i >= 0; i--)
+    {
+        //find end result element
+        for (int j = 0; j < list[i].size(); j++) 
+        {
+            if (list[i][j].curr.compare(textToFind) ==0) 
+            {
+                result.push_back(list[i][j]);
+                //cout << list[i][j].how.ruleNum << " " << list[i][j].how.index << " " << textToFind << endl;
+                textToFind = list[i][j].prev;
+                //cout << textToFind << endl;
+                break;
+            }
+        }
+    }
+
+    for (int i = result.size()-2; i >= 0; i--)
+    {
+        cout << result[i].how.ruleNum << " " << result[i].how.index << " " << result[i].curr << endl;
     }
 
     return 0;
