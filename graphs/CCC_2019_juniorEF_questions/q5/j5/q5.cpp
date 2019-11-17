@@ -19,7 +19,7 @@ struct Node {
     string curr;
 };
 
-void findAllOccurances(std::string data, std::string toSearch [2], int ruleNum, int prevIndex, vector<Node> &nodeLevel)
+void findAllOccurances(std::string data, std::string toSearch [2], int ruleNum, int prevIndex, unordered_map<Node> &nodeLevel)
 {
 	// Get the first occurrence
 	size_t pos = data.find(toSearch[0]);
@@ -35,11 +35,11 @@ void findAllOccurances(std::string data, std::string toSearch [2], int ruleNum, 
 		// Add position to the vector
 		//vec.push_back(pos);
         temp.replace(pos, toSearch[0].length(), toSearch[1]);
-        cout << temp << endl;
-        cout << "wut " << endl;
+        // cout << temp << endl;
+        // cout << "wut " << endl;
         t.curr = temp;
         t.prev = data;
-        nodeLevel.push_back(t);
+        nodeLevel.insert(t);
  
 		// Get the next occurrence from the current position
 		pos =data.find(toSearch[0], pos + toSearch[0].size());
@@ -51,7 +51,7 @@ int main(int argc, const char** argv) {
     //unordered_map< string, list< pair<string, int> > > adjacencyList(vertices + 1);
 
     ifstream file;
-    file.open("data2.txt");
+    file.open("data1.txt");
     int index;
     string init,fin;
 
@@ -68,11 +68,11 @@ int main(int argc, const char** argv) {
 
     file >> steps >> init >> fin;
 
-    printf("%s %s \n%s %s \n%s %s \n%d %s %s\n\n", one[0].c_str(), one[1].c_str(), two[0].c_str(), two[1].c_str(), three[0].c_str(), three[1].c_str(), steps, init.c_str(), fin.c_str());
+    //printf("%s %s \n%s %s \n%s %s \n%d %s %s\n\n", one[0].c_str(), one[1].c_str(), two[0].c_str(), two[1].c_str(), three[0].c_str(), three[1].c_str(), steps, init.c_str(), fin.c_str());
 
-    vector<vector<Node> > list;
+    vector<unordered_map<Node, Node> > list;
     for (int i = 0; i < steps + 1; i++) {
-        vector<Node> t;
+        unordered_map<Node, Node> t;
         list.push_back(t);
     }
 
@@ -92,35 +92,37 @@ int main(int argc, const char** argv) {
     t.how.ruleNum = 0;
     t.curr = init;
     t.prev = "";
-    list[0].push_back(t);
+    list[0].insert(t);
 
     for (int j = 0; j + 1< list.size(); j++) {
-        vector<Node> x = list[j];
-        cout << x.size() << endl;
+        unordered_map<Node, Node> x = list[j];
+        //cout << x.size() << endl;
         for (int i = 0; i < x.size(); i++) {
             cout << "iter " << j << " " << i << endl;
-            cout << x[i].curr << endl;
-            cout << "One" << endl;
+            //cout << x[i].curr << endl;
+            //cout << "One" << endl;
             findAllOccurances(x[i].curr, rules[0], 1, i, list[j+1]);
-            cout << "Two" << endl;
+            //cout << "Two" << endl;
             findAllOccurances(x[i].curr, rules[1], 2, i, list[j+1]);
-            cout << "Three" << endl;
+            //cout << "Three" << endl;
             findAllOccurances(x[i].curr, rules[2], 3, i, list[j+1]);
-            cout << "------------------------" << endl;
+            //cout << "------------------------" << endl;
         }
-        cout << list[j+1].size() << endl;
+        //cout << list[j+1].size() << endl;
         cout << "*******************" << endl;
     }
 
     string textToFind = fin;
-    vector<Node> result;
+    unordered_map<Node> result;
+    //change to work with hashset
     for (int i = steps; i >= 0; i--)
     {
         //find end result element
         for (int j = 0; j < list[i].size(); j++) 
         {
-            if (list[i][j].curr.compare(textToFind) ==0) 
+            if (list[i].find(Node.curr == textToFind) != list[i].end()) 
             {
+                //***************************fix
                 result.push_back(list[i][j]);
                 //cout << list[i][j].how.ruleNum << " " << list[i][j].how.index << " " << textToFind << endl;
                 textToFind = list[i][j].prev;
@@ -132,7 +134,7 @@ int main(int argc, const char** argv) {
 
     for (int i = result.size()-2; i >= 0; i--)
     {
-        cout << result[i].how.ruleNum << " " << result[i].how.index << " " << result[i].curr << endl;
+        cout << result[i].how.ruleNum << " " << result[i].how.index +1 << " " << result[i].curr << endl;
     }
 
     return 0;
