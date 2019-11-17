@@ -1,5 +1,5 @@
-#include <unordered_map>
 #include <iostream>
+#include <unordered_set>
 #include <string>
 #include <list>
 #include <fstream>
@@ -19,7 +19,7 @@ struct Node {
     string curr;
 };
 
-void findAllOccurances(std::string data, std::string toSearch [2], int ruleNum, int prevIndex, unordered_map<Node> &nodeLevel)
+void findAllOccurances(std::string data, std::string toSearch [2], int ruleNum, int prevIndex, unordered_set<Node> &nodeLevel)
 {
 	// Get the first occurrence
 	size_t pos = data.find(toSearch[0]);
@@ -48,7 +48,7 @@ void findAllOccurances(std::string data, std::string toSearch [2], int ruleNum, 
 
 int main(int argc, const char** argv) {
     //int vertices, edges;
-    //unordered_map< string, list< pair<string, int> > > adjacencyList(vertices + 1);
+    //unordered_set< string, list< pair<string, int> > > adjacencyList(vertices + 1);
 
     ifstream file;
     file.open("data1.txt");
@@ -70,9 +70,9 @@ int main(int argc, const char** argv) {
 
     //printf("%s %s \n%s %s \n%s %s \n%d %s %s\n\n", one[0].c_str(), one[1].c_str(), two[0].c_str(), two[1].c_str(), three[0].c_str(), three[1].c_str(), steps, init.c_str(), fin.c_str());
 
-    vector<unordered_map<Node, Node> > list;
+    vector<unordered_set<Node, Node> > list;
     for (int i = 0; i < steps + 1; i++) {
-        unordered_map<Node, Node> t;
+        unordered_set<Node, Node> t;
         list.push_back(t);
     }
 
@@ -95,7 +95,7 @@ int main(int argc, const char** argv) {
     list[0].insert(t);
 
     for (int j = 0; j + 1< list.size(); j++) {
-        unordered_map<Node, Node> x = list[j];
+        unordered_set<Node, Node> x = list[j];
         //cout << x.size() << endl;
         for (int i = 0; i < x.size(); i++) {
             cout << "iter " << j << " " << i << endl;
@@ -113,7 +113,7 @@ int main(int argc, const char** argv) {
     }
 
     string textToFind = fin;
-    unordered_map<Node> result;
+    unordered_set<Node> result;
     //change to work with hashset
     for (int i = steps; i >= 0; i--)
     {
