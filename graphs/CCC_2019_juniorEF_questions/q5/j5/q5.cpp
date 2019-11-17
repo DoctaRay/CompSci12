@@ -19,6 +19,78 @@ struct Node {
     string curr;
 };
 
+void quickSort(vector<Node> &a, int start, int end)
+{
+
+        int i = start;
+        int j = end;
+
+        if (j - i >= 1)
+        {
+            string pivot = a[i].curr;
+            while (j > i)
+            {
+                while (a[i].curr.compare(pivot) <= 0 && i <= end && j > i){
+                    i++;
+                }
+                while (a[j].curr.compare(pivot) >= 0 && j >= start && j >= i){
+                    j--;
+                }
+                if (j > i)
+                    swap(a[i], a[j]);
+                }
+
+            swap(a[start], a[j]);
+            quickSort(a, start, j - 1);
+            quickSort(a, j + 1, end);
+        }
+}
+
+int binarySearch(vector<Node> vec, string x, int n) {
+  int l = 0;
+  int r = n - 1;
+  while (l <= r) {
+    int m = l + (r - l) / 2;
+    int res = x.compare(vec[m].curr);
+
+    // if (x == (vec[m])) {
+    //     cout << "t1 " << vec[m] << endl;
+    //     res = 0;
+    // }
+
+    // Check if x is present at mid
+        if (res == 0) {
+            //cout << "t2" << vec[m] << endl;
+            //wordsf.push_back(vec[m]);
+            return m;
+        }
+
+        // If x greater, ignore left half
+        if (res > 0) {
+            //cout << "t3" << vec[m] << endl;
+            l = m + 1;
+        }
+
+        // If x is smaller, ignore right half
+        else {
+            //cout << "t4" << vec[m] << endl;
+            r = m - 1;
+            //cout << vec[m].compare(x) << endl;
+            /*cout << l << endl;
+            cout << r << endl;
+            cout << m << endl;
+            cout << res << endl;
+            cout << x << endl;
+            cout << x.compare(vec[m]) << endl;*/
+            //if(x.compare(vec[m]) == 0) return m;
+        }
+
+  }
+
+  return -1;
+}
+
+
 void findAllOccurances(std::string data, std::string toSearch [2], int ruleNum, int prevIndex, vector<Node> &nodeLevel)
 {
 	// Get the first occurrence
@@ -94,6 +166,7 @@ int main(int argc, const char** argv) {
     t.prev = "";
     list[0].push_back(t);
 
+    //creating variations / nodes
     for (int j = 0; j + 1< list.size(); j++) {
         vector<Node> x = list[j];
         cout << x.size() << endl;
@@ -114,20 +187,28 @@ int main(int argc, const char** argv) {
 
     string textToFind = fin;
     vector<Node> result;
+
+    //finding path
     for (int i = steps; i >= 0; i--)
     {
         //find end result element
-        for (int j = 0; j < list[i].size(); j++) 
-        {
-            if (list[i][j].curr.compare(textToFind) ==0) 
-            {
-                result.push_back(list[i][j]);
-                cout << list[i][j].how.ruleNum << " " << list[i][j].how.index << " " << textToFind << endl;
-                textToFind = list[i][j].prev;
-                cout << textToFind << endl;
-                break;
-            }
-        }
+        // for (int j = 0; j < list[i].size(); j++) 
+        // {
+        //     // if (list[i][j].curr.compare(textToFind) ==0) 
+        //     // {
+        //     //     result.push_back(list[i][j]);
+        //     //     cout << list[i][j].how.ruleNum << " " << list[i][j].how.index << " " << textToFind << endl;
+        //     //     textToFind = list[i][j].prev;
+        //     //     cout << textToFind << endl;
+        //     //     break;
+        //     // }
+            
+        // }
+        //quicksort should be size - 1
+        quickSort(list[i], 0, list[i].size() - 1);
+        int x = binarySearch(list[i], textToFind, list[i].size());
+        result.push_back(list[i][x]);
+        textToFind = list[i][x].prev;
     }
 
     for (int i = result.size()-2; i >= 0; i--)
