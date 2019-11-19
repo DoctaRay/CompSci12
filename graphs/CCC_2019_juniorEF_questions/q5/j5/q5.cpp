@@ -48,7 +48,7 @@ void quickSort(vector<Node> &a, int start, int end)
         }
 }
 
-int binarySearch(vector<Node> vec, string x, int n) {
+int binarySearch(vector<Node>& vec, string x, int n) {
 
     cout << "noot" << endl;
   int l = 0;
@@ -100,7 +100,6 @@ void findAllOccurances(std::string data, std::string toSearch [2], int ruleNum, 
 	// Get the first occurrence
 	size_t pos = data.find(toSearch[0]);
 
- 
 	// Repeat till end is reached
 	while( pos != std::string::npos)
 	{
@@ -112,15 +111,17 @@ void findAllOccurances(std::string data, std::string toSearch [2], int ruleNum, 
 		//vec.push_back(pos);
         temp.replace(pos, toSearch[0].length(), toSearch[1]);
         cout << temp << endl;
-        cout << "wut " << endl;
+        //cout << "wut " << endl;
         t.curr = temp;
         t.prev = data;
+        cout << "node level size" << nodeLevel.size() << endl;
         nodeLevel.push_back(t);
- 
 		// Get the next occurrence from the current position
 		pos =data.find(toSearch[0], pos + toSearch[0].size());
+
 	}
 }
+
 
 int main(int argc, const char** argv) {
     //int vertices, edges;
@@ -155,14 +156,26 @@ int main(int argc, const char** argv) {
 
     printf("%s %s \n%s %s \n%s %s \n%d %s %s\n\n", one[0].c_str(), one[1].c_str(), two[0].c_str(), two[1].c_str(), three[0].c_str(), three[1].c_str(), steps, init.c_str(), fin.c_str());
 
+    cout << "Rev" << endl;
+    for (auto x: rulesRev) {
+        cout << x[0] << " " << x[1] << endl;
+
+    }
+
     vector<vector<Node> > list;
     vector<vector<Node> > list2;
-    for (int i = 0; i < steps / 2+ 1; i++) {
+
+    if (steps % 2 != 0) {
+        steps--;
+    }
+
+    for (int i = 0; i < steps / 2 + 1; i++) {
         vector<Node> t;
         list.push_back(t);
     }
+    cout << "Size" << list.size() << endl;
 
-    for (int i = 0; i < steps / 2+ 1; i++) {
+    for (int i = 0; i < steps / 2 + 1; i++) {
         vector<Node> t;
         list2.push_back(t);
     }
@@ -185,10 +198,12 @@ int main(int argc, const char** argv) {
     t.curr = init;
     t.prev = "";
     list[0].push_back(t);
+    cout << list[0][0].curr << endl;
 
     //creating node for final string search
     t.curr = fin;
     list2[0].push_back(t);
+    cout << list2[0][0].curr << endl;
 
     
 
@@ -213,12 +228,14 @@ int main(int argc, const char** argv) {
     }
 
     //creating 2nd half variation
-    for (int j = 0; j + 1< list2.size(); j++) {
+    cout << "2nd" << endl << endl <<endl;
+    for (int j = 0; j< list2.size() && j+1 < list2.size(); j++) {
         vector<Node> x = list2[j];
         cout << x.size() << endl;
         for (int i = 0; i < x.size(); i++) {
             cout << "iter " << j << " " << i << endl;
-            cout << x[i].curr << endl;
+            cout << "varying " << x[i].curr << endl;
+            cout << "vec size" << list2.size();
             cout << "One" << endl;
             findAllOccurances(x[i].curr, rulesRev[0], 1, i, list2[j+1]);
             cout << "Two" << endl;
@@ -236,7 +253,7 @@ int main(int argc, const char** argv) {
     string textToFind = fin;
     vector<Node> result;
 
-    cout << list[2].size() << endl;
+    cout << list[1].size() << endl;
     for (int i = list.size(); i >= 0; i--)
     {
            cout << "booP1" << endl;
@@ -255,8 +272,12 @@ int main(int argc, const char** argv) {
         // }
         //quicksort should be size - 1
         quickSort(list[i], 0, list[i].size() - 1);
+        //x is index of textToFind in list2
         int x = binarySearch(list[i], textToFind, list[i].size() - 1);
+        cout << "braP1" << endl;
+        cout << "x: " << x << endl;
         result.push_back(list[i][x]);
+        cout << "mrap" << endl;
         textToFind = list[i][x].prev;
     }
     cout << "booP2" << endl;
