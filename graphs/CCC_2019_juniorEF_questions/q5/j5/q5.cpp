@@ -107,8 +107,8 @@ void findAllOccurances(std::string data, std::string toSearch [2], int ruleNum, 
 		// Add position to the vector
 		//vec.push_back(pos);
         temp.replace(pos, toSearch[0].length(), toSearch[1]);
-        cout << temp << endl;
-        cout << "wut " << endl;
+        //cout << temp << endl;
+        //cout << "wut " << endl;
         t.curr = temp;
         t.prev = data;
         nodeLevel.push_back(t);
@@ -123,7 +123,7 @@ int main(int argc, const char** argv) {
     //unordered_map< string, list< pair<string, int> > > adjacencyList(vertices + 1);
 
     ifstream file;
-    file.open("data2.txt");
+    file.open("data3.txt");
     int index;
     string init,fin;
 
@@ -169,20 +169,20 @@ int main(int argc, const char** argv) {
     //creating variations / nodes
     for (int j = 0; j + 1< list.size(); j++) {
         vector<Node> x = list[j];
-        cout << x.size() << endl;
+        //cout << x.size() << endl;
         for (int i = 0; i < x.size(); i++) {
             cout << "iter " << j << " " << i << endl;
-            cout << x[i].curr << endl;
-            cout << "One" << endl;
+            //cout << x[i].curr << endl;
+            //cout << "One" << endl;
             findAllOccurances(x[i].curr, rules[0], 1, i, list[j+1]);
-            cout << "Two" << endl;
+            //cout << "Two" << endl;
             findAllOccurances(x[i].curr, rules[1], 2, i, list[j+1]);
-            cout << "Three" << endl;
+            //cout << "Three" << endl;
             findAllOccurances(x[i].curr, rules[2], 3, i, list[j+1]);
-            cout << "------------------------" << endl;
+            //cout << "------------------------" << endl;
         }
-        cout << list[j+1].size() << endl;
-        cout << "*******************" << endl;
+        //cout << list[j+1].size() << endl;
+        //cout << "*******************" << endl;
     }
 
     string textToFind = fin;
