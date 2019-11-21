@@ -124,6 +124,7 @@ void findAllOccurances(std::string data, std::string toSearch [2], int ruleNum, 
 }
 
 
+//use top level string found in result2 for result of textToFind var for result1 search
 int main(int argc, const char** argv) {
     //int vertices, edges;
     //unordered_map< string, list< pair<string, int> > > adjacencyList(vertices + 1);
