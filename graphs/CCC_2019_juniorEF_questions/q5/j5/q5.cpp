@@ -42,7 +42,7 @@ void quickSort(vector<Node> &a, int start, int end)
                     swap(a[i], a[j]);
                 }
 
-            //swap(a[start], a[j]);
+            swap(a[start], a[j]);
             quickSort(a, start, j - 1);
             quickSort(a, j + 1, end);
         }
@@ -50,12 +50,13 @@ void quickSort(vector<Node> &a, int start, int end)
 
 int binarySearch(vector<Node>& vec, string x, int n) {
 
-    cout << "noot" << endl;
+    cout << "string comparing " << x << endl;
   int l = 0;
-  int r = n;
+  int r = n - 1;
   while (l <= r) {
     int m = l + (r - l) / 2;
     int res = x.compare(vec[m].curr);
+    cout << "string being compared: " << vec[m].curr << endl;
 
     // if (x == (vec[m])) {
     //     cout << "t1 " << vec[m] << endl;
@@ -174,6 +175,7 @@ int main(int argc, const char** argv) {
         list.push_back(t);
     }
     cout << "Size" << list.size() << endl;
+    
 
     for (int i = 0; i < steps / 2 + 1; i++) {
         vector<Node> t;
@@ -250,8 +252,19 @@ int main(int argc, const char** argv) {
 
 
     //finding path
-    string textToFind = fin;
+    string textToFind = init;
     vector<Node> result;
+
+    cout << "items in list" << endl;
+    int count = 0;
+    for (auto x: list) {
+        count++;
+        cout << count << endl;
+        for (auto y: x) {
+            cout << y.curr << " ";
+        }
+        cout << endl;
+    }
 
     cout << list[1].size() << endl;
     for (int i = list.size(); i >= 0; i--)
@@ -273,17 +286,22 @@ int main(int argc, const char** argv) {
         //quicksort should be size - 1
         quickSort(list[i], 0, list[i].size() - 1);
         //x is index of textToFind in list2
-        int x = binarySearch(list[i], textToFind, list[i].size() - 1);
-        cout << "braP1" << endl;
+        int x = binarySearch(list[i], textToFind, list[i].size());
+        //cout << "braP1" << endl;
         cout << "x: " << x << endl;
-        result.push_back(list[i][x]);
-        cout << "mrap" << endl;
-        textToFind = list[i][x].prev;
+        if (x != - 1){
+            cout << "added"<< endl;
+            result.push_back(list[i][x]);
+            //cout << "mrap" << endl;
+            textToFind = list[i][x].prev;
+        } 
     }
-    cout << "booP2" << endl;
+    cout << "booP2" << endl << endl;
     cout << list2.size();
+    vector<Node> result2;
+    textToFind = fin;
 
-    for (int i = list2.size(); i >= 0; i--)
+    for (int i = list2.size() - 1; i >= 0; i--)
     {
         //find end result element
         // for (int j = 0; j < list[i].size(); j++) 
@@ -300,15 +318,24 @@ int main(int argc, const char** argv) {
         // }
         //quicksort should be size - 1
         quickSort(list2[i], 0, list2[i].size() - 1);
-        int x = binarySearch(list2[i], textToFind, list2[i].size() - 1);
-        result.push_back(list2[i][x]);
-        textToFind = list2[i][x].prev;
+        int x = binarySearch(list2[i], textToFind, list2[i].size());
+        if (x != - 1){
+            cout << "added"<< endl;
+            result2.push_back(list2[i][x]);
+            textToFind = list2[i][x].prev;
+        }
     }
 
-
-    for (int i = result.size()-2; i >= 0; i--)
+    cout << "result1 " << endl;
+    for (int i = result.size() - 1; i >= 0; i--)
     {
         cout << result[i].how.ruleNum << " " << result[i].how.index+1 << " " << result[i].curr << endl;
+    }
+
+    cout << "result2 " << endl;
+    for (int i = result2.size() - 1; i >= 0; i--)
+    {
+        cout << result2[i].how.ruleNum << " " << result2[i].how.index+1 << " " << result2[i].curr << endl;
     }
 
     return 0;
