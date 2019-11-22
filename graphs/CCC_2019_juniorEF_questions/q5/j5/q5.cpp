@@ -28,7 +28,6 @@ void quickSort(vector<Node> &a, int start, int end)
 
         if (j - i >= 1)
         {
-            cout << "yeet" << endl;
             string pivot = a[i].curr;
             while (j > i)
             {
@@ -56,7 +55,7 @@ int binarySearch(vector<Node>& vec, string x, int n) {
   while (l <= r) {
     int m = l + (r - l) / 2;
     int res = x.compare(vec[m].curr);
-    cout << "string being compared: " << vec[m].curr << endl;
+    cout << "string being compared: " << vec[m].curr << " with index " << m << endl;
 
     // if (x == (vec[m])) {
     //     cout << "t1 " << vec[m] << endl;
@@ -163,6 +162,7 @@ int main(int argc, const char** argv) {
         cout << x[0] << " " << x[1] << endl;
 
     }
+    cout << endl << endl;
 
     vector<vector<Node> > list;
     vector<vector<Node> > list2;
@@ -175,7 +175,6 @@ int main(int argc, const char** argv) {
         vector<Node> t;
         list.push_back(t);
     }
-    cout << "Size" << list.size() << endl;
     
 
     for (int i = 0; i < steps / 2 + 1; i++) {
@@ -201,15 +200,12 @@ int main(int argc, const char** argv) {
     t.curr = init;
     t.prev = "";
     list[0].push_back(t);
-    cout << list[0][0].curr << endl;
+    cout << "init " << list[0][0].curr << endl;
 
     //creating node for final string search
     t.curr = fin;
     list2[0].push_back(t);
-    cout << list2[0][0].curr << endl;
-
-    
-
+    cout << "final " <<list2[0][0].curr << endl;
 
     //creating 1st half variations / nodes
     for (int j = 0; j + 1< list.size(); j++) {
@@ -259,15 +255,28 @@ int main(int argc, const char** argv) {
     cout << "items in list" << endl;
     int count = 0;
     for (auto x: list) {
-        count++;
         cout << count << endl;
         for (auto y: x) {
             cout << y.curr << " ";
         }
+        count++;
         cout << endl;
     }
 
-    cout << list[1].size() << endl;
+    cout << "items in list2 " << endl;
+    count = 0;
+    for (auto x: list2) {
+
+        cout << count << endl;
+        for (auto y: x) {
+            cout << y.curr << " ";
+        }
+        count++;
+        cout << endl;
+    }
+    cout << "**********" << endl;
+
+    cout << "list1 size: " << list.size() << endl;
     for (int i = list.size(); i >= 0; i--)
     {
            cout << "booP1" << endl;
@@ -296,9 +305,10 @@ int main(int argc, const char** argv) {
             //cout << "mrap" << endl;
             textToFind = list[i][x].prev;
         } 
+        cout << "end loop" << endl;
     }
     cout << "booP2" << endl << endl;
-    cout << list2.size();
+    cout << "list 2 size: " << list2.size() << endl;
     vector<Node> result2;
     textToFind = fin;
 
