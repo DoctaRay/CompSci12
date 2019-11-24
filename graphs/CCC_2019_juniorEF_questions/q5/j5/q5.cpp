@@ -234,7 +234,7 @@ int main(int argc, const char** argv) {
         for (int i = 0; i < x.size(); i++) {
             cout << "iter " << j << " " << i << endl;
             cout << "varying " << x[i].curr << endl;
-            cout << "vec size" << list2.size();
+            cout << "vec size" << list2.size() << endl;
             cout << "One" << endl;
             findAllOccurances(x[i].curr, rulesRev[0], 1, i, list2[j+1]);
             cout << "Two" << endl;
@@ -312,29 +312,33 @@ int main(int argc, const char** argv) {
     vector<Node> result2;
     textToFind = fin;
 
-    for (int i = list2.size() - 1; i >= 0; i--)
-    {
-        //find end result element
-        // for (int j = 0; j < list[i].size(); j++) 
-        // {
-        //     // if (list[i][j].curr.compare(textToFind) ==0) 
-        //     // {
-        //     //     result.push_back(list[i][j]);
-        //     //     cout << list[i][j].how.ruleNum << " " << list[i][j].how.index << " " << textToFind << endl;
-        //     //     textToFind = list[i][j].prev;
-        //     //     cout << textToFind << endl;
-        //     //     break;
-        //     // }
+    // for (int i = list2.size() - 1; i >= 0; i--)
+    // {
+    //     //find end result element
+    //     // for (int j = 0; j < list[i].size(); j++) 
+    //     // {
+    //     //     // if (list[i][j].curr.compare(textToFind) ==0) 
+    //     //     // {
+    //     //     //     result.push_back(list[i][j]);
+    //     //     //     cout << list[i][j].how.ruleNum << " " << list[i][j].how.index << " " << textToFind << endl;
+    //     //     //     textToFind = list[i][j].prev;
+    //     //     //     cout << textToFind << endl;
+    //     //     //     break;
+    //     //     // }
             
-        // }
-        //quicksort should be size - 1
-        quickSort(list2[i], 0, list2[i].size() - 1);
-        int x = binarySearch(list2[i], textToFind, list2[i].size());
-        if (x != - 1){
-            cout << "added"<< endl;
-            result2.push_back(list2[i][x]);
-            textToFind = list2[i][x].prev;
-        }
+    //     // }
+    //     //quicksort should be size - 1
+    //     quickSort(list2[i], 0, list2[i].size() - 1);
+    //     int x = binarySearch(list2[i], textToFind, list2[i].size());
+    //     if (x != - 1){
+    //         cout << "added"<< endl;
+    //         result2.push_back(list2[i][x]);
+    //         textToFind = list2[i][x].prev;
+    //     }
+    // }
+
+    while (true) {
+        int x = binarySearch(list2[list2.size() -1], textToFind, list2.size());
     }
 
     cout << "result1 " << endl;
