@@ -13,11 +13,25 @@ struct Replacement {
 };
 
 struct Node {
-    string prev; 
+    int prevIndex; 
     //int next;
     Replacement how; // how it was done
     string curr;
 };
+
+void printList(vector<vector<Node> > &a, int listNum) 
+{
+    int count = 0;
+    cout << "Items in list #" << listNum << endl;
+    for (auto x: a) {
+        count++;
+        cout << count << endl;
+        for (auto y: x) {
+            cout << y.curr << " " << endl;
+        }
+        cout << endl;
+    }
+}
 
 void quickSort(vector<Node> &a, int start, int end)
 {
@@ -113,7 +127,7 @@ void findAllOccurances(std::string data, std::string toSearch [2], int ruleNum, 
         cout << temp << endl;
         //cout << "wut " << endl;
         t.curr = temp;
-        t.prev = data;
+        t.prevIndex = prevIndex;
         cout << "node level size" << nodeLevel.size() << endl;
         nodeLevel.push_back(t);
 		// Get the next occurrence from the current position
@@ -168,18 +182,30 @@ int main(int argc, const char** argv) {
     vector<vector<Node> > list2;
 
     if (steps % 2 != 0) {
-        steps--;
-    }
-
-    for (int i = 0; i < steps / 2 + 1; i++) {
-        vector<Node> t;
-        list.push_back(t);
-    }
+        // + 1 because the first node doesn't count
+        for (int i = 0; i < (steps - 1) / 2 +1; i++) {
+            vector<Node> t;
+            list.push_back(t);
+        }
     
 
-    for (int i = 0; i < steps / 2 + 1; i++) {
-        vector<Node> t;
-        list2.push_back(t);
+        for (int i = 0; i < (steps-1) / 2 + 1; i++) {
+            vector<Node> t;
+            list2.push_back(t);
+        }
+    }
+    else {
+        // steps - 1 because first node will be init or fin
+        for (int i = 0; i < steps / 2 + 1; i++) {
+            vector<Node> t;
+            list.push_back(t);
+        }
+        
+
+        for (int i = 0; i < steps / 2 + 1; i++) {
+            vector<Node> t;
+            list2.push_back(t);
+        }
     }
 
     //vector<size_t> vec; 
@@ -198,14 +224,14 @@ int main(int argc, const char** argv) {
     t.how.index = 0;
     t.how.ruleNum = 0;
     t.curr = init;
-    t.prev = "";
+    t.prevIndex = -1;
     list[0].push_back(t);
     cout << "init " << list[0][0].curr << endl;
 
     //creating node for final string search
     t.curr = fin;
     list2[0].push_back(t);
-    cout << "final " <<list2[0][0].curr << endl;
+    cout << "final " <<list2[0][0].curr << endl << endl;
 
     //creating 1st half variations / nodes
     for (int j = 0; j + 1< list.size(); j++) {
@@ -221,7 +247,9 @@ int main(int argc, const char** argv) {
             cout << "Three" << endl;
             findAllOccurances(x[i].curr, rules[2], 3, i, list[j+1]);
             cout << "------------------------" << endl;
+
         }
+        quickSort(x, 0, x.size());
         cout << list[j+1].size() << endl;
         cout << "*******************" << endl;
     }
@@ -243,6 +271,7 @@ int main(int argc, const char** argv) {
             findAllOccurances(x[i].curr, rulesRev[2], 3, i, list2[j+1]);
             cout << "------------------------" << endl;
         }
+        quickSort(x, 0, x.size());
         cout << list2[j+1].size() << endl;
         cout << "*******************" << endl;
     }
@@ -252,34 +281,17 @@ int main(int argc, const char** argv) {
     string textToFind = init;
     vector<Node> result;
 
-    cout << "items in list" << endl;
-    int count = 0;
-    for (auto x: list) {
-        cout << count << endl;
-        for (auto y: x) {
-            cout << y.curr << " ";
-        }
-        count++;
-        cout << endl;
-    }
+    printList(list, 1);
 
-    cout << "items in list2 " << endl;
-    count = 0;
-    for (auto x: list2) {
-
-        cout << count << endl;
-        for (auto y: x) {
-            cout << y.curr << " ";
-        }
-        count++;
-        cout << endl;
-    }
+    printList(list2, 2);
     cout << "**********" << endl;
 
     cout << "list1 size: " << list.size() << endl;
     for (int i = list.size(); i >= 0; i--)
     {
+
            cout << "booP1" << endl;
+           cout << "i: " << i << endl;
         //find end result element
         // for (int j = 0; j < list[i].size(); j++) 
         // {
@@ -303,7 +315,6 @@ int main(int argc, const char** argv) {
             cout << "added"<< endl;
             result.push_back(list[i][x]);
             //cout << "mrap" << endl;
-            textToFind = list[i][x].prev;
         } 
         cout << "end loop" << endl;
     }
@@ -312,33 +323,25 @@ int main(int argc, const char** argv) {
     vector<Node> result2;
     textToFind = fin;
 
-    // for (int i = list2.size() - 1; i >= 0; i--)
-    // {
-    //     //find end result element
-    //     // for (int j = 0; j < list[i].size(); j++) 
-    //     // {
-    //     //     // if (list[i][j].curr.compare(textToFind) ==0) 
-    //     //     // {
-    //     //     //     result.push_back(list[i][j]);
-    //     //     //     cout << list[i][j].how.ruleNum << " " << list[i][j].how.index << " " << textToFind << endl;
-    //     //     //     textToFind = list[i][j].prev;
-    //     //     //     cout << textToFind << endl;
-    //     //     //     break;
-    //     //     // }
-            
-    //     // }
-    //     //quicksort should be size - 1
-    //     quickSort(list2[i], 0, list2[i].size() - 1);
-    //     int x = binarySearch(list2[i], textToFind, list2[i].size());
-    //     if (x != - 1){
-    //         cout << "added"<< endl;
-    //         result2.push_back(list2[i][x]);
-    //         textToFind = list2[i][x].prev;
-    //     }
+    //sorting each row
+    // for (int i = list2.size() - 1; i>= 0; i--) {
+    //     quickSort(list[i], 0, list[i].size() - 1);
     // }
 
-    while (true) {
-        int x = binarySearch(list2[list2.size() -1], textToFind, list2.size());
+    for (int i = list2.size() - 1; i >= 0; i--)
+    {
+        //find end result element
+        // for (int j = 0; j < list[i].size(); j++) 
+        // {
+        //     // if (list[i][j].curr.compare(textToFind) ==0) 
+        //     // {
+        //     //     result.push_back(list[i][j]);
+        //     //     cout << list[i][j].how.ruleNum << " " << list[i][j].how.index << " " << textToFind << endl;
+        //     //     textToFind = list[i][j].prev;
+        //     //     cout << textToFind << endl;
+        //     //     break;
+        //     // }
+            
     }
 
     cout << "result1 " << endl;
