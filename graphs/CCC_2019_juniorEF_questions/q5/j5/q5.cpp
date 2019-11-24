@@ -196,7 +196,7 @@ int main(int argc, const char** argv) {
     }
     else {
         // steps - 1 because first node will be init or fin
-        for (int i = 0; i < steps / 2 + 1; i++) {
+        for (int i = 0; i < steps / 2 ; i++) {
             vector<Node> t;
             list.push_back(t);
         }
