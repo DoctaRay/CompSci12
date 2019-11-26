@@ -227,7 +227,7 @@ int main(int argc, const char** argv) {
     //unordered_map< string, list< pair<string, int> > > adjacencyList(vertices + 1);
 
     ifstream file;
-    file.open("data10.txt");
+    file.open("data2.txt");
     int index;
     string init,fin;
 
@@ -266,20 +266,21 @@ int main(int argc, const char** argv) {
     vector<vector<Node> > list;
     vector<vector<Node> > list2;
 
-    if (steps == 3) {
-    	vector<Node> temp;
-    	//1 space must be left for initial node
-    	for (int i = 0; i < steps; i++) {
-    		list.push_back(temp);
-    	}
+    // if (steps == 3) {
+    // 	vector<Node> temp;
+    // 	//1 space must be left for initial node
+    // 	for (int i = 0; i < steps; i++) {
+    // 		list.push_back(temp);
+    // 	}
 
-    	//list 2 is bigger one 
-    	////cout << "lulu" << endl;
-    	for (int i = 0; i < 1; i++) {
-    		list2.push_back(temp);
-    	}
-    }
-    else if (steps % 2 != 0) {
+    // 	//list 2 is bigger one 
+    // 	////cout << "lulu" << endl;
+    // 	for (int i = 0; i < 1; i++) {
+    // 		list2.push_back(temp);
+    // 	}
+    // }
+    //odd steps
+    if (steps % 2 != 0) {
     	vector<Node> temp;
     	//1 space must be left for initial node
     	for (int i = 0; i < (steps - 1) / 2 + 1; i++) {
@@ -288,10 +289,12 @@ int main(int argc, const char** argv) {
 
     	
     	////cout << "lulu" << endl;
-    	for (int i = 0; i < (steps-1) / 2; i++) {
+    	for (int i = 0; i < (steps-1) / 2 + 1; i++) {
     		list2.push_back(temp);
     	}
-    } else {
+    }
+    //even steps 
+    else {
     	vector<Node> temp;
     	//1 space must be left for initial node
     	for (int i = 0; i < steps / 2; i++) {
