@@ -1,9 +1,11 @@
-#include <unordered_map>
+//#include <unordered_map>
 #include <iostream>
 #include <string>
-#include <list>
+//#include <list>
 #include <fstream>
 #include <vector>
+#include <stdio.h>
+#include <time.h>
 
 using namespace std;
 
@@ -225,7 +227,7 @@ int checkAllOccurances(Node list1Node, vector<Node> list2LastRow, vector<Node>& 
 int main(int argc, const char** argv) {
     //int vertices, edges;
     //unordered_map< string, list< pair<string, int> > > adjacencyList(vertices + 1);
-
+    clock_t start = clock();
     ifstream file;
     file.open("data10.txt");
     int index;
@@ -518,7 +520,9 @@ int main(int argc, const char** argv) {
         cout << halfTwo[i].ruleNum << " " << halfTwo[i].index+1 << " " << temp.curr << endl;
     }
 
-
+    clock_t stop = clock();
+    double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+    printf("Time elapsed in ms: %f", elapsed);
 
 
 
