@@ -9,16 +9,16 @@ using namespace std;
 
 struct Node {
     Node *prevNode; 
-    Node *nextNode;
+    //Node *nextNode;
     //int next;
 
     int ruleNum;
     int index;
     string curr;
 
-    string returnCurr() {
-    	return curr;
-    }
+    // string returnCurr() {
+    // 	return curr;
+    // }
 };
 
 void quickSort(vector<Node> &a, int start, int end)
@@ -207,7 +207,7 @@ int checkAllOccurances(Node list1Node, vector<Node> list2LastRow, vector<Node>& 
         	t.curr = temp;
         	t.prevNode = &list1Node;
         	list1LastRow.push_back(t);
-        	cout << list1LastRow.size() << endl;
+        	//cout << list1LastRow.size() << endl;
         	//cout << "found" << endl;
         	return x;
         }
@@ -316,7 +316,7 @@ int main(int argc, const char** argv) {
     s.curr = fin;
     s.ruleNum = 0;
     s.index = -1;
-    s.nextNode = nullptr;
+    //s.nextNode = nullptr;
     list2[0].push_back(s);
 
     //creating variations 
@@ -435,7 +435,7 @@ int main(int argc, const char** argv) {
     //cout << "************" << endl;
 
 
-	quickSort(list[list.size() -1], 0, list[list.size() -1].size() - 1);
+	//quickSort(list[list.size() -1], 0, list[list.size() -1].size() - 1);
 	quickSort(list2[list2.size() -1], 0, list2[list2.size() -1].size() - 1);
 	//cout << "lulu" << endl;
 
