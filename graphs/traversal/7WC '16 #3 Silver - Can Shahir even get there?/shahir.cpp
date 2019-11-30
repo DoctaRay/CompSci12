@@ -1,5 +1,3 @@
-//Modified version of http://www.geeksforgeeks.org/breadth-first-traversal-for-a-graph/
-
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -96,14 +94,7 @@ int main()
     //cout << endl;
 
     cout << g.BFS(shahirIndex, dateIndex) << endl;;
-    //cout << "lil" << endl;
-    // Graph g(6);
-    // g.add_edge(0,1);
-    // g.add_edge(0,2);
-    // g.add_edge(1,2);
-    // g.add_edge(2,0);
-    // g.add_edge(2,3);
-    // g.add_edge(3,3);
+    //cout << "lil" << endl;=
     // int v;
     // cout<<"Enter vertex from where to perform BFS"<<endl;
     // cin>>v;
