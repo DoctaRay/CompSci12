@@ -3,6 +3,7 @@
 #include <list> 
 #include <fstream>
 #include <vector>
+#include <algorithm>
 using namespace std; 
 
 int get_position(char x) {
@@ -96,11 +97,11 @@ void Graph::printAllPathsUtil(int u, int d, bool visited[],
                 continue;
             }
             temp.push_back(get_char(path[i] - 1));
-            cout << get_char(path[i] - 1) << " ";
+            //cout << get_char(path[i] - 1) << " ";
         }
         //cout << "y" << endl; 
         result.push_back(temp);
-        cout << endl;
+        //cout << endl;
         
     } 
     else // If current vertex is not destination 
@@ -141,7 +142,7 @@ int main()
             count++;
             vector<char> temp2 = {str[0], str[1]};
             orig.push_back(str);
-            cout << str << endl;
+            //cout << str << endl;
             temp.push_back(temp2);
             if (get_position(str[0]) > max)
                 max = get_position(str[0]);
@@ -152,17 +153,17 @@ int main()
 
 
     //cout << max << endl;
+    
     Graph g(count*2);
 
     //char orig [count][2]; 
     for (auto x: temp) {
-        cout << x[0] << " " << x[1] << endl;
+        //cout << x[0] << " " << x[1] << endl;
         g.addEdge(x[0], x[1]); 
     }
 
     char s = 'A', d = 'B'; 
-    cout << "Following are all different paths from " << s 
-        << " to " << d << endl; 
+    //cout << "Following are all different paths from " << s << " to " << d << endl; 
     g.printAllPaths(s, d); 
 
     // cout << endl << "result vector" << endl;
@@ -183,12 +184,12 @@ int main()
                           v.begin()); 
   
     vector<char> pattern;
-    cout << "\nCommon elements:\n"; 
+    //cout << "\nCommon elements:\n"; 
     for (st = v.begin(); st != it; ++st) {
         pattern.push_back(char(*st));
-        cout << char(*st) << ", "; 
+        //cout << char(*st) << ", "; 
     }
-    cout << '\n'; 
+    //cout << '\n'; 
 
     vector<vector<char> > copy; 
     for (auto x: g.result) {
@@ -200,8 +201,8 @@ int main()
     for (auto x: copy) {
         if (!includes(x.begin(), x.end(), pattern.begin(), pattern.end())) {
             for (auto y: x)
-                cout << y << " ";
-            cout << endl;
+                //cout << y << " ";
+            //cout << endl;
             goto aa;
             break;
         } else {
@@ -222,7 +223,7 @@ int main()
             } else 
                 cout << pattern[i] << pattern[i+1] << endl;
         }
-        cout << "There are " << count << " disconnecting roads" << endl;
+        cout << "There are " << count << " disconnecting roads." << endl;
         return 0;
     }
 
