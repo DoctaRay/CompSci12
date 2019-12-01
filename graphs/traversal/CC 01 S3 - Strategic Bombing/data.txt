@@ -8,5 +8,4 @@ GF
 BG
 HB
 GH
-AB
 **

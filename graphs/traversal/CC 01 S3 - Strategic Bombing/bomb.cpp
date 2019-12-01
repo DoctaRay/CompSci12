@@ -91,10 +91,10 @@ void Graph::printAllPathsUtil(int u, int d, bool visited[],
         //cout << "kek" << endl;
         std::vector<char> temp;
         for (int i = 0; i<path_index; i++)  {
-            // if (get_char(path[i] - 1) == start || get_char(path[i] - 1) == end){
-            //     //cout << "get char " << get_char(path[i] - 1) << endl;
-            //     continue;
-            // }
+            if (get_char(path[i] - 1) == start || get_char(path[i] - 1) == end){
+                //cout << "get char " << get_char(path[i] - 1) << endl;
+                continue;
+            }
             temp.push_back(get_char(path[i] - 1));
             cout << get_char(path[i] - 1) << " ";
         }
@@ -131,6 +131,7 @@ int main()
     file.open("data.txt");
     string str;
     vector<vector<char> > temp;
+    vector<string> orig;
 
     int max = get_position('A');
     int count = 0;
@@ -139,6 +140,7 @@ int main()
         if (str != "**") {
             count++;
             vector<char> temp2 = {str[0], str[1]};
+            orig.push_back(str);
             cout << str << endl;
             temp.push_back(temp2);
             if (get_position(str[0]) > max)
@@ -150,8 +152,9 @@ int main()
 
 
     //cout << max << endl;
-    Graph g(count * 2);
+    Graph g(count*2);
 
+    //char orig [count][2]; 
     for (auto x: temp) {
         cout << x[0] << " " << x[1] << endl;
         g.addEdge(x[0], x[1]); 
@@ -179,11 +182,53 @@ int main()
                           g.result[1].end(), 
                           v.begin()); 
   
+    vector<char> pattern;
     cout << "\nCommon elements:\n"; 
     for (st = v.begin(); st != it; ++st) {
+        pattern.push_back(char(*st));
         cout << char(*st) << ", "; 
     }
     cout << '\n'; 
+
+    vector<vector<char> > copy; 
+    for (auto x: g.result) {
+        sort(x.begin(), x.end());
+        copy.push_back(x);
+    }
+
+    count = 0;
+    for (auto x: copy) {
+        if (!includes(x.begin(), x.end(), pattern.begin(), pattern.end())) {
+            for (auto y: x)
+                cout << y << " ";
+            cout << endl;
+            goto aa;
+            break;
+        } else {
+            count = pattern.size() - 1;
+        }
+    }
+
+
+    if (count != 0) {
+        for (int i = 0; i +1< pattern.size(); i++) {
+            string s = "";
+            s+= pattern[i+1];
+            s+= pattern[i];
+            //cout << "s: " << s << endl;
+            if (find(orig.begin(), orig.end(), s) != orig.end()) {
+                //cout << "lulu" << endl;
+                cout << pattern[i+1] << pattern[i] << endl;
+            } else 
+                cout << pattern[i] << pattern[i+1] << endl;
+        }
+        cout << "There are " << count << " disconnecting roads" << endl;
+        return 0;
+    }
+
+    aa: {
+        cout << "There are 0 disconnecting roads." << endl;
+    }
 
     return 0; 
 } 
