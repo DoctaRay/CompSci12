@@ -17,7 +17,7 @@ char get_char(int x) {
 class Graph 
 { 
     int V; // No. of vertices in graph 
-    list<int> *adj; // Pointer to an array containing adjacency lists 
+    list<int> *adj; // Pointer to an array containing adjacency lists i.e vector of set size arrays
 
     // A recursive function used by printAllPaths() 
     void printAllPathsUtil(int , int , bool [], int [], int &); 
@@ -26,23 +26,33 @@ public:
     Graph(int V); // Constructor 
     void addEdge(char u, char v); 
     void printAllPaths(char s, char d); 
+    vector<vector<char> > result;
+    char start;
+    char end;
 }; 
 
 Graph::Graph(int V) 
-{ 
+{   
+    //number of nodes
     this->V = V; 
     adj = new list<int>[V]; 
 } 
 
 void Graph::addEdge(char u, char v) 
 { 
-    cout << "lulu" << endl;
+    //cout << u << " " << v << endl;
+    //cout << get_position(u) << " " << get_position(v) << endl << "--" << endl;
     adj[get_position(u)].push_back(get_position(v)); // Add v to u’s list. 
+
+    //twice because it's undirected
+    adj[get_position(v)].push_back(get_position(u));
 } 
 
 // Prints all paths from 's' to 'd' 
 void Graph::printAllPaths(char s, char d) 
 { 
+    start = s;
+    end = d;
     // Mark all the vertices as not visited 
     bool *visited = new bool[V]; 
 
@@ -54,6 +64,8 @@ void Graph::printAllPaths(char s, char d)
     // Initialize all vertices as not visited 
     for (int i = 0; i < V; i++) 
         visited[i] = false; 
+
+    //cout << adj->size() << endl;
 
     // Call the recursive helper function to print all paths 
     printAllPathsUtil(get_position(s), get_position(d), visited, path, path_index); 
@@ -70,28 +82,44 @@ void Graph::printAllPathsUtil(int u, int d, bool visited[],
     visited[u] = true; 
     path[path_index] = u; 
     path_index++; 
-    cout << "lulu" << endl;
-
+    //cout << "lulu" << endl;
+    //cout << "kek" << endl;
     // If current vertex is same as destination, then print 
     // current path[] 
     if (u == d) 
     { 
-        for (int i = 0; i<path_index; i++) 
-            cout << get_char(path[i]) << " "; 
-        cout << endl; 
+        //cout << "kek" << endl;
+        std::vector<char> temp;
+        for (int i = 0; i<path_index; i++)  {
+            // if (get_char(path[i] - 1) == start || get_char(path[i] - 1) == end){
+            //     //cout << "get char " << get_char(path[i] - 1) << endl;
+            //     continue;
+            // }
+            temp.push_back(get_char(path[i] - 1));
+            cout << get_char(path[i] - 1) << " ";
+        }
+        //cout << "y" << endl; 
+        result.push_back(temp);
+        cout << endl;
         
     } 
     else // If current vertex is not destination 
     { 
         // Recur for all the vertices adjacent to current vertex 
         list<int>::iterator i; 
-        for (i = adj[u].begin(); i != adj[u].end(); ++i) 
-            if (!visited[*i]) 
+        for (i = adj[u].begin(); i != adj[u].end(); ++i) { 
+            //cout << "u: " << u << endl;
+            //cout << get_char(*i - 1) << endl;
+            if (!visited[*i]) {
+                //cout << "visited i: " << get_char(*i - 1) << endl;
                 printAllPathsUtil(*i, d, visited, path, path_index); 
+            }
+        }
     } 
 
     // Remove current vertex from path[] and mark it as unvisited 
-    path_index--; 
+    path_index--;
+    //cout << "u: " << get_char(u) << endl; 
     visited[u] = false; 
 } 
 
@@ -105,9 +133,11 @@ int main()
     vector<vector<char> > temp;
 
     int max = get_position('A');
+    int count = 0;
     //cout << get_position('A') << endl;
     while(getline(file, str)) {
         if (str != "**") {
+            count++;
             vector<char> temp2 = {str[0], str[1]};
             cout << str << endl;
             temp.push_back(temp2);
@@ -120,7 +150,7 @@ int main()
 
 
     //cout << max << endl;
-    Graph g(max);
+    Graph g(count * 2);
 
     for (auto x: temp) {
         cout << x[0] << " " << x[1] << endl;
@@ -131,6 +161,29 @@ int main()
     cout << "Following are all different paths from " << s 
         << " to " << d << endl; 
     g.printAllPaths(s, d); 
+
+    // cout << endl << "result vector" << endl;
+    // for (auto x: g.result) {
+    //     for (auto y: x) {
+    //         cout << y << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    vector<int> v(g.result[0].size() + g.result[1].size()); 
+    vector<int>::iterator it, st; 
+
+    it = set_intersection(g.result[0].begin(), 
+                          g.result[0].end(), 
+                          g.result[1].begin(), 
+                          g.result[1].end(), 
+                          v.begin()); 
+  
+    cout << "\nCommon elements:\n"; 
+    for (st = v.begin(); st != it; ++st) {
+        cout << char(*st) << ", "; 
+    }
+    cout << '\n'; 
 
     return 0; 
 } 
