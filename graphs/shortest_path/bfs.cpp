@@ -20,31 +20,41 @@ public:
 	void addEdge(int s, int d)
 	{
 		Edge[s].push_back(d);
-		Edge[d].push_back(s);
+		//Edge[d].push_back(s);
 	}
 
 	int bfs(int start, int end) {
+		cout << "start: " << start << endl;
+		cout << "end: " << end << endl;
+		if (start == end) return 0;
 		for (auto i: visited) i = false;
 
 		list<int> q;
 		visited[start] = true;
 		q.push_back(start);
 		int count = 0;
+		// if (start == end) {
+		// 			//cout << "count: " << count << endl;
+		// 	return count;
+		// }
 
 		while (!q.empty()) 
 		{
 			start = q.front();
+			cout << "start:" << start << endl;
 			count++;
-			if (start == end) {
-				//cout << "count: " << count << endl;
-				return count;
-			}
 			q.pop_front();
 			for (auto i : Edge[start]) 
 			{
 				if (!visited[i])
 				{
 					visited[i] = true;
+					cout << "i: " << i << endl;
+					if (i == end) {
+					//cout << "count: " << count << endl;
+						cout << "bloop" << endl;
+						return count;
+					} 
 					q.push_back(i);
 				} 
 			}
@@ -85,9 +95,11 @@ int main(int argc, char const *argv[])
 		cout << "c: " << c << endl;
 		cout << "d: " << d << endl;
 		int dest1 = g.bfs(houseC, c);
-		//cout << dest1<<endl;
+		cout << "dest1: " << dest1<<endl;
+		cout << "------------------" << endl;
 		int dest2 = g.bfs(houseC, d);
-		//cout << dest2<<endl;
+		cout << "dest2:  " << dest2<<endl;
+		cout << "------------------" << endl;
 		int total = dest1 + dest2;
 
 		if (dest1 < 0 || dest2 < 0) {
@@ -95,6 +107,7 @@ int main(int argc, char const *argv[])
 		} else {
 			cout << total << endl;
 		}
+		cout << "****************" << endl;
 	}  
 	//cout << "lulu" << endl;
 
