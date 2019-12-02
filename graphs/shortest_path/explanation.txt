@@ -1,0 +1,14 @@
+6 -> number of houses 7 -> number of roads 4 -> number of errands 1 -> house which Derek must go through each time i.e house C
+-- road definitions
+1 2
+1 3
+1 4
+2 3
+3 4
+6 5
+5 5
+--- errands to do
+1 4 
+3 4 
+5 6 
+5 5
