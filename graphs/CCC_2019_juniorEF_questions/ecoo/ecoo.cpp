@@ -116,7 +116,7 @@ int binarySearch(vector<string>& vec, string x, int n) {
 int main(int argc, char const *argv[])
 {
 	ifstream file;
-	file.open("ECOO_DATA22.txt");
+	file.open("ECOO_DATA20.txt");
 
 	unordered_set<string> uniqueNames;
 

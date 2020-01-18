@@ -1,19 +1,13 @@
-#include <boost/multiprecision/cpp_int.hpp> 
-using namespace boost::multiprecision; 
-using namespace std; 
-  
-cpp_int boost_factorial(int num) 
-{ 
-    cpp_int fact = 1; 
-    for (int i=num; i>1; --i)     
-        fact *= i; 
-    return fact; 
-} 
+#include <string>
+#include <iostream>
 
-int main() 
-{   
-    int num=50; 
-    cout << "Factorial of " << num << " = " 
-         << boost_factorial(num) ; 
-    return 0; 
-} 
+using namespace std;
+
+int main(int argc, char const *argv[])
+{
+    /* code */
+    string text;
+    cin >> text;
+    printf("lol %s", text.c_str());
+    return 0;
+}
