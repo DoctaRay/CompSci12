@@ -1,5 +1,5 @@
 // C++ program to print all paths from a source to destination. 
-#include<iostream> 
+#include <iostream> 
 #include <list> 
 #include <fstream>
 #include <vector>
@@ -58,7 +58,7 @@ void Graph::printAllPaths(char s, char d)
     bool *visited = new bool[V]; 
 
 
-    // Create an array to store paths 
+    // Create an array to store paths. Int because arrays use numbers and using maps would be too complex
     int *path = new int[V]; 
     int path_index = 0; // Initialize path[] as empty 
 
@@ -85,6 +85,7 @@ void Graph::printAllPathsUtil(int u, int d, bool visited[],
     path_index++; 
     //cout << "lulu" << endl;
     //cout << "kek" << endl;
+    
     // If current vertex is same as destination, then print 
     // current path[] 
     if (u == d) 
@@ -129,42 +130,48 @@ int main()
 { 
     // Create a graph given in the above diagram 
     ifstream file;
-    file.open("data.txt");
+    file.open("data2.txt");
     string str;
     vector<vector<char> > temp;
     vector<string> orig;
 
-    int max = get_position('A');
-    int count = 0;
+    //numNodes is number conversion of the last letter in dataset
+    int numNodes = get_position('A');
+    
+    int numEdges = 0;
     //cout << get_position('A') << endl;
     while(getline(file, str)) {
         if (str != "**") {
-            count++;
-            vector<char> temp2 = {str[0], str[1]};
+            numEdges++;
+            vector<char> temp2;
+            temp2.push_back(str[0]);
+            temp2.push_back(str[1]);
+
             orig.push_back(str);
-            //cout << str << endl;
+            
             temp.push_back(temp2);
-            if (get_position(str[0]) > max)
-                max = get_position(str[0]);
-            if (get_position(str[1]) > max)
-                max = get_position(str[1]);
+            if (get_position(str[0]) > numNodes)
+                numNodes = get_position(str[0]);
+            if (get_position(str[1]) > numNodes)
+                numNodes = get_position(str[1]); 
         }
     }
 
 
     //cout << max << endl;
     
-    Graph g(count*2);
-
+    Graph g(numEdges+1);
     //char orig [count][2]; 
     for (auto x: temp) {
         //cout << x[0] << " " << x[1] << endl;
         g.addEdge(x[0], x[1]); 
+        g.addEdge(x[1], x[0]); 
     }
 
     char s = 'A', d = 'B'; 
     //cout << "Following are all different paths from " << s << " to " << d << endl; 
     g.printAllPaths(s, d); 
+
 
     // cout << endl << "result vector" << endl;
     // for (auto x: g.result) {
@@ -174,6 +181,9 @@ int main()
     //     cout << endl;
     // }
 
+    /**
+     * Finding all the nodes between two nodes 
+    **/
     vector<int> v(g.result[0].size() + g.result[1].size()); 
     vector<int>::iterator it, st; 
 
@@ -197,7 +207,7 @@ int main()
         copy.push_back(x);
     }
 
-    count = 0;
+    numEdges = 0;
     for (auto x: copy) {
         if (!includes(x.begin(), x.end(), pattern.begin(), pattern.end())) {
             for (auto y: x)
@@ -206,12 +216,12 @@ int main()
             goto aa;
             break;
         } else {
-            count = pattern.size() - 1;
+            numEdges = pattern.size() - 1;
         }
     }
 
 
-    if (count != 0) {
+    if (numEdges != 0) {
         for (int i = 0; i +1< pattern.size(); i++) {
             string s = "";
             s+= pattern[i+1];
@@ -223,7 +233,7 @@ int main()
             } else 
                 cout << pattern[i] << pattern[i+1] << endl;
         }
-        cout << "There are " << count << " disconnecting roads." << endl;
+        cout << "There are " << numEdges << " disconnecting roads." << endl;
         return 0;
     }
 

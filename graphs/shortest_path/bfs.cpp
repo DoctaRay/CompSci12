@@ -8,22 +8,28 @@ using namespace std;
 class Graph 
 {
 	vector<vector<int> > Edge;
-	vector<unsigned char> visited;
 
 public: 
 	Graph(int V)
 	{
 		Edge.resize(V);
-		visited.resize(V);
+	}
+
+	void graphSize()
+	{
+		printf("Size of graph: %d\n", Edge.size());
 	}
 
 	void addEdge(int s, int d)
 	{
 		Edge[s].push_back(d);
+		printf("%d -> %d\n", s, d);
 		//Edge[d].push_back(s);
 	}
 
 	int bfs(int start, int end) {
+		vector<unsigned char> visited;
+		visited.resize(Edge.size());
 		cout << "start: " << start << endl;
 		cout << "end: " << end << endl;
 		if (start == end) return 0;
@@ -41,7 +47,7 @@ public:
 		while (!q.empty()) 
 		{
 			start = q.front();
-			cout << "start:" << start << endl;
+			//cout << "start:" << start << endl;
 			count++;
 			q.pop_front();
 			for (auto i : Edge[start]) 
@@ -76,11 +82,14 @@ int main(int argc, char const *argv[])
 	int roads [numRoads][2];
 	int errands [numErrands][2];
 
-	Graph g(numRoads);
+	Graph g(numHouses + 1);
 	//cout << "numHouses: " << numHouses << endl;
 
 	int x, y;
-	for (int i = 0; i < numRoads; ++i) {
+
+	g.graphSize();
+	
+	for (int i = 1; i <= numRoads; ++i) {
 		file >> x >> y;
 		//cout << x << " " << y << endl;
 		cout << i << endl;
