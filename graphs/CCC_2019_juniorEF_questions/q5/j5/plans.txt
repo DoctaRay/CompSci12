@@ -1,0 +1,6 @@
+meet in the middle
+do binary search of each string (node.curr) of last row list2 in last row of list1
+continue printing previous index node and info for output
+
+-> make another custom node that points forward? for list2
+-> create pointer to other array instead of index? easier to get info from.  
