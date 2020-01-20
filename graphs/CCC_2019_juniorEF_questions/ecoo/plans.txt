@@ -1,0 +1,3 @@
+use hashset to keep track of unique names
+if name is not in hashset, make new node
+if name is in hashset, create mother node comparison

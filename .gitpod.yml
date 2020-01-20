@@ -3,3 +3,4 @@ image:
 vscode:
   extensions:
     - hars.CppSnippets@0.0.14:d9VwbSfM8Lu6jSqLKsmohg==
+    - ms-vscode.cpptools@0.26.1:bxNzDqLdBImvpbNCCeU8Ug==

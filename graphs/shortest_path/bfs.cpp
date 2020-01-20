@@ -1,0 +1,141 @@
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <list>
+
+using namespace std;
+
+class Graph 
+{
+	vector<vector<int> > Edge;
+
+public: 
+	Graph(int V)
+	{
+		Edge.resize(V);
+	}
+
+	void graphSize()
+	{
+		printf("Size of graph: %d\n", Edge.size());
+	}
+
+	void addEdge(int s, int d)
+	{
+		Edge[s].push_back(d);
+		printf("%d -> %d\n", s, d);
+		//Edge[d].push_back(s);
+	}
+
+	int bfs(int start, int end) {
+		vector<unsigned char> visited;
+		visited.resize(Edge.size());
+		cout << "start: " << start << endl;
+		cout << "end: " << end << endl;
+		if (start == end) return 0;
+		for (auto i: visited) i = false;
+
+		list<int> q;
+		visited[start] = true;
+		q.push_back(start);
+		int count = 0;
+		// if (start == end) {
+		// 			//cout << "count: " << count << endl;
+		// 	return count;
+		// }
+
+		while (!q.empty()) 
+		{
+			start = q.front();
+			//cout << "start:" << start << endl;
+			count++;
+			q.pop_front();
+			for (auto i : Edge[start]) 
+			{
+				if (!visited[i])
+				{
+					visited[i] = true;
+					cout << "i: " << i << endl;
+					if (i == end) {
+					//cout << "count: " << count << endl;
+						cout << "bloop" << endl;
+						return count;
+					} 
+					q.push_back(i);
+				} 
+			}
+		}
+		return -1;
+	}
+
+};
+
+int main(int argc, char const *argv[])
+{
+	ifstream file;
+	file.open("data.txt");
+
+	int numHouses, numRoads, numErrands, houseC;
+	
+	file >> numHouses >> numRoads >> numErrands >> houseC;
+	
+	int roads [numRoads][2];
+	int errands [numErrands][2];
+
+	Graph g(numHouses + 1);
+	//cout << "numHouses: " << numHouses << endl;
+
+	int x, y;
+
+	g.graphSize();
+	
+	for (int i = 1; i <= numRoads; ++i) {
+		file >> x >> y;
+		//cout << x << " " << y << endl;
+		cout << i << endl;
+		g.addEdge(x,y);
+	}
+
+	cout << "numErrands: " << numErrands << endl;
+	int c, d;
+	for (int i = 0; i < numErrands; ++i) {
+		//		cout << "yikes" << endl;
+		file >> c >> d;
+		cout << "c: " << c << endl;
+		cout << "d: " << d << endl;
+		int dest1 = g.bfs(houseC, c);
+		cout << "dest1: " << dest1<<endl;
+		cout << "------------------" << endl;
+		int dest2 = g.bfs(houseC, d);
+		cout << "dest2:  " << dest2<<endl;
+		cout << "------------------" << endl;
+		int total = dest1 + dest2;
+
+		if (dest1 < 0 || dest2 < 0) {
+			cout << "This is a scam!" << endl;
+		} else {
+			cout << total << endl;
+		}
+		cout << "****************" << endl;
+	}  
+	//cout << "lulu" << endl;
+
+	// for (int i = 0; i < numRoads; ++i) {
+	// 	cout << i << endl;
+	// }
+
+	// for (int i = 0; i < numErrands; ++i) {
+	// 	int dest1 = g.bfs(houseC, errands[i][0]);
+	// 	int dest2 = g.bfs(houseC, errands[i][1]);
+
+	// 	if (dest1 < 0 || dest2 < 0) {
+	// 		cout << "This is a scam!" << endl;
+	// 	} else {
+	// 		cout << dest1 + dest2 << endl;
+	// 	}
+	// }  
+
+
+	
+	return 0;
+}
