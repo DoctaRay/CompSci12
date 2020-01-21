@@ -207,6 +207,7 @@ int main()
         copy.push_back(x);
     }
 
+    //printing out original roads
     numEdges = 0;
     for (auto x: copy) {
         if (!includes(x.begin(), x.end(), pattern.begin(), pattern.end())) {

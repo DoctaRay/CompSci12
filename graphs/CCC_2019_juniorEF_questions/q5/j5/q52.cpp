@@ -227,9 +227,9 @@ int checkAllOccurances(Node list1Node, vector<Node> list2LastRow, vector<Node>& 
 int main(int argc, const char** argv) {
     //int vertices, edges;
     //unordered_map< string, list< pair<string, int> > > adjacencyList(vertices + 1);
-    clock_t start = clock();
+    //clock_t start = clock();
     ifstream file;
-    file.open("data2.txt");
+    //file.open("data2.txt");
     int index;
     string init,fin;
 
@@ -240,9 +240,9 @@ int main(int argc, const char** argv) {
     string rules [3][2];
     string rulesRev [3][2];
 
-    file >> rules[0][0] >> rules[0][1];
-    file >> rules[1][0] >> rules[1][1];
-    file >> rules[2][0] >> rules[2][1];
+    cin >> rules[0][0] >> rules[0][1];
+    cin >> rules[1][0] >> rules[1][1];
+    cin >> rules[2][0] >> rules[2][1];
 
     rulesRev[0][0] = rules[0][1];
     rulesRev[0][1] = rules[0][0];
@@ -253,7 +253,7 @@ int main(int argc, const char** argv) {
 
 
 
-    file >> steps >> init >> fin;
+    cin >> steps >> init >> fin;
 
 
     //printf("%s %s \n%s %s \n%s %s \n%d %s %s\n\n", one[0].c_str(), one[1].c_str(), two[0].c_str(), two[1].c_str(), three[0].c_str(), three[1].c_str(), steps, init.c_str(), fin.c_str());
@@ -523,9 +523,9 @@ int main(int argc, const char** argv) {
         cout << halfTwo[i].ruleNum << " " << halfTwo[i].index+1 << " " << temp.curr << endl;
     }
 
-    clock_t stop = clock();
-    double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
-    printf("Time elapsed in ms: %f", elapsed);
+    // clock_t stop = clock();
+    // double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+    // printf("Time elapsed in ms: %f", elapsed);
 
 
 
