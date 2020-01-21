@@ -1,0 +1,26 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "build & debug tests",
+        "type": "shell",
+        "command": "g++",
+        "args": [
+          "-g",
+          "-std=c++14",
+          "-I/src",
+          "-lgtest",
+          "${fileDirname}/${fileBasenameNoExtension}",
+          "-o",
+          "bin/testMain"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": [
+          "$gcc"
+        ]
+      }
+    ]
+  }

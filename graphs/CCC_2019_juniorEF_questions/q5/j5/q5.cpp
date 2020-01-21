@@ -124,11 +124,7 @@ void findAllOccurances(std::string data, std::string toSearch [2], int ruleNum, 
 		// Add position to the vector
 		//vec.push_back(pos);
         temp.replace(pos, toSearch[0].length(), toSearch[1]);
-<<<<<<< HEAD
-        cout << temp << endl;
-=======
         //cout << temp << endl;
->>>>>>> master
         //cout << "wut " << endl;
         t.curr = temp;
         t.prevIndex = prevIndex;
@@ -147,7 +143,7 @@ int main(int argc, const char** argv) {
     //unordered_map< string, list< pair<string, int> > > adjacencyList(vertices + 1);
 
     ifstream file;
-    file.open("data3.txt");
+    file.open("data1.txt");
     int index;
     string init,fin;
 
@@ -250,19 +246,12 @@ int main(int argc, const char** argv) {
             findAllOccurances(x[i].curr, rules[1], 2, i, list[j+1]);
             //cout << "Three" << endl;
             findAllOccurances(x[i].curr, rules[2], 3, i, list[j+1]);
-<<<<<<< HEAD
             cout << "------------------------" << endl;
 
         }
-        quickSort(x, 0, x.size());
-        cout << list[j+1].size() << endl;
-        cout << "*******************" << endl;
-=======
-            //cout << "------------------------" << endl;
-        }
-        //cout << list[j+1].size() << endl;
-        //cout << "*******************" << endl;
->>>>>>> master
+        // quickSort(x, 0, x.size());
+        // cout << list[j+1].size() << endl;
+        // cout << "*******************" << endl;
     }
 
     //creating 2nd half variation

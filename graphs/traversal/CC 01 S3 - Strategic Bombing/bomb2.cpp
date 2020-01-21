@@ -2,21 +2,8 @@
 #include <fstream>
 #include <vector>
 #include <list>
-#include <iterator>
-#include <algorithm>
-#include <unordered_map>
 
 using namespace std;
-
-int get_position(char x)
-{
-    return tolower(x) - 'a' + 1;
-}
-
-char get_char(int x)
-{
-    return toupper('a' + x);
-}
 
 bool bfs(int start, int end, int allPaths[], vector<vector<int> > Edge)
 {
@@ -92,11 +79,6 @@ public:
         Edge.resize(V);
     }
 
-    void graphSize()
-    {
-        printf("Size of graph: %d\n", Edge.size());
-    }
-
     void addEdge(int s, int d)
     {
         Edge[s - 65].push_back(d - 65);
@@ -104,7 +86,6 @@ public:
         //Edge[d].push_back(s);
     }
 
-    //change to bool?
 
     vector<vector<int> > returnShortestDistance(char start, char end)
     {
@@ -135,9 +116,9 @@ public:
         }
 
         // printing path from source to destination
-        cout << "\nPath is:\n";
-        for (int i = path.size() - 1; i >= 0; i--)
-            cout << char(path[i] + 65) << " ";
+        // cout << "\nPath is:\n";
+        // for (int i = path.size() - 1; i >= 0; i--)
+        //     cout << char(path[i] + 65) << " ";
 
         // cout << endl;
         for (int j = path.size() - 1; j >= 1; j--)
@@ -166,25 +147,27 @@ void checkBombPaths(Graph origGraph, vector<vector<int> > roadsVec, vector<vecto
     // cout << endl;
     int count = 0;
 
-    cout << "roads to delete size" << roadsToDelete.size() << endl;
+    //cout << "roads to delete size" << roadsToDelete.size() << endl;
     for(int i = 0; i < roadsToDelete.size(); i++)
     {
-        bool opp;
         //cout << roadsToDelete[i][0] << "+_" << roadsToDelete[i][1] << endl;
-        Graph temp(roadsVec.size());
+        Graph temp(origGraph.Edge.size());
+        //cout << "roadsVec.size" << roadsVec.size() << endl;
         int index;
 
-        cout << "i " << i << endl;
-        cout << "___________" << endl;
+        //cout << "i " << i << endl;
+        //cout << "___________" << endl;
         for (int j = 0; j < roadsVec.size(); j++)
         {
-             cout << "j " << j << endl;
+            // cout << "j " << j << endl;
             // cout << "roadsVec.size " << roadsVec.size() << endl;
             
             //if element in roadVec is in roadToDelete, skip iteration 
+            //cout << "roadsVec[j][1]-65: " << roadsVec[j][1]-65 << endl;
             if (!((roadsToDelete[i][0] == roadsVec[j][0]-65 && roadsToDelete[i][1] == roadsVec[j][1]-65)||(roadsToDelete[i][0] == roadsVec[j][1]-65 && roadsToDelete[i][1]== roadsVec[j][0]-65)))
             {
                 //cout << "opp" << endl;
+                //cout << "roadsVec[j].size()" << roadsVec[j].size() << endl;
                 temp.addEdge(roadsVec[j][0], roadsVec[j][1]);
                 temp.addEdge(roadsVec[j][1], roadsVec[j][0]);
 
@@ -204,7 +187,6 @@ void checkBombPaths(Graph origGraph, vector<vector<int> > roadsVec, vector<vecto
         
         // if bfs isn't possible with road taken out 
         bool bfsPossible = bfs('A', 'B', waste, temp.Edge);
-        cout << "p1" << endl;
         //cout << "bfsPossible " << bfsPossible << endl;
         if (!bfsPossible)
         {
@@ -261,21 +243,19 @@ void checkBombPaths(Graph origGraph, vector<vector<int> > roadsVec, vector<vecto
 
 int main(int argc, char const *argv[])
 {
-    ifstream file;
-    file.open("data.txt");
+    //ifstream file;
+    //file.open("data.txt");
 
-    int numRoads = 0;
     int numNodes = int('A');
     string line;
     vector<vector<int> > roadsVec;
 
-    while (getline(file, line))
+    while (getline(cin, line))
     {
         if (line == "**")
         {
             break;
         }
-        numRoads++;
             vector<int> tempVec;
             tempVec.push_back(int(line[0]));
             tempVec.push_back(int(line[1]));
@@ -290,7 +270,7 @@ int main(int argc, char const *argv[])
                 numNodes = int(line[1]);
         //cout << "<" << line << ">" << endl;
     }
-    cout << "numNodes " << numNodes << endl;
+    //cout << "numNodes " << numNodes << endl;
 
     //cout << "numNodes:" << numNodes - 65 + 1 << endl;
 
