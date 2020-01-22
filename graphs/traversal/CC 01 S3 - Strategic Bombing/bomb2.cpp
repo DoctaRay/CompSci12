@@ -87,7 +87,7 @@ public:
     }
 
 
-    vector<vector<int> > returnShortestDistance(char start, char end)
+    vector<vector<int> > returnRoadsToDelete(char start, char end)
     {
         // predecessor[i] array stores predecessor of
         // i and distance array stores distance of i
@@ -284,5 +284,5 @@ int main(int argc, char const *argv[])
     }
 
     char start = 'A', end = 'B';
-    checkBombPaths(g, roadsVec, g.returnShortestDistance(start, end));
+    checkBombPaths(g, roadsVec, g.returnRoadsToDelete(start, end));
 }
